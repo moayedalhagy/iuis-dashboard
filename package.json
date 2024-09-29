@@ -10,6 +10,18 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@emotion/react": "^11.13.3",
+    "@mantine/code-highlight": "^7.13.0",
+    "@mantine/core": "^7.13.0",
+    "@mantine/form": "^7.13.0",
+    "@mantine/hooks": "^7.13.0",
+    "@mantine/modals": "^7.13.0",
+    "@mantine/notifications": "^7.13.0",
+    "@mantine/tiptap": "^7.13.0",
+    "@tabler/icons-react": "^3.19.0",
+    "@tiptap/extension-link": "^2.7.4",
+    "@tiptap/react": "^2.7.4",
+    "@tiptap/starter-kit": "^2.7.4",
     "react": "^18.3.1",
     "react-dom": "^18.3.1"
   },
