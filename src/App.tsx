@@ -1,13 +1,12 @@
-import { Button, MantineProvider } from "@mantine/core";
+import { MantineProvider, DirectionProvider } from "@mantine/core";
 
 function App() {
   return (
-    <MantineProvider>
-      <p className="bg-green-600">
-        Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-      </p>
-      <Button className="bg-blue-600"> click me</Button>
-    </MantineProvider>
+    <DirectionProvider>
+      <MantineProvider>
+        <p>Lorem ipsum dolor sit.</p>
+      </MantineProvider>
+    </DirectionProvider>
   );
 }
 
