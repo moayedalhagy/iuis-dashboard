@@ -24,6 +24,7 @@
     "@tiptap/starter-kit": "^2.7.4",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
+    "react-router-dom": "^6.26.2",
     "tailwind-preset-mantine": "^1.0.5"
   },
   "devDependencies": {

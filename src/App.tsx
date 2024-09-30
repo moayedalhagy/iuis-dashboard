@@ -1,12 +1,16 @@
-import { MantineProvider, DirectionProvider } from "@mantine/core";
+import Layout from "./Layout";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Home from "./pages/Home";
 
 function App() {
   return (
-    <DirectionProvider>
-      <MantineProvider>
-        <p>Lorem ipsum dolor sit.</p>
-      </MantineProvider>
-    </DirectionProvider>
+    <Router>
+      <Routes>
+        <Route path="/" element={<Layout />}>
+          <Route index element={<Home />} />
+        </Route>
+      </Routes>
+    </Router>
   );
 }
 
