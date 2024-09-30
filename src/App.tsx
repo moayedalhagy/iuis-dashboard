@@ -1,13 +1,13 @@
-import Layout from "./Layout";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Home from "./pages/Home";
+import Layout from "./Layout";
 
 function App() {
   return (
     <Router>
       <Routes>
         <Route path="/" element={<Layout />}>
-          <Route index element={<Home />} />
+          <Route index element={<p> home page</p>} />
+          <Route path="/x" element={<p> x </p>} />
         </Route>
       </Routes>
     </Router>

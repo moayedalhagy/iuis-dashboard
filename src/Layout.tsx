@@ -1,7 +1,7 @@
 import { Outlet } from "react-router-dom";
-import DrawerSection from "./sections/DrawerSection";
-import { MantineProvider, DirectionProvider } from "@mantine/core";
 
+import { MantineProvider, DirectionProvider } from "@mantine/core";
+import DrawerSection from "./sections/DrawerSection";
 export default function Layout() {
   return (
     <DirectionProvider detectDirection>

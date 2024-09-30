@@ -1,8 +1,22 @@
 import { Drawer } from "@mantine/core";
-
 import { IconHome, Icon12Hours } from "@tabler/icons-react";
 import NavbarLinkCircle from "../components/NavbarLinkCircle";
 import NavbarItem from "../components/NavbarItem";
+import { Link } from "react-router-dom";
+
+const NavbarList = (
+  <div className="pt-3 mt-5 space-y-2">
+    <NavbarItem label="الرئيسية  " leftSectionIcon={<IconHome />} />
+
+    <NavbarItem label="قائمة" leftSectionIcon={<Icon12Hours />} single={false}>
+      <Link to={"/x"}>
+        <NavbarItem label="الرئيسية" leftSectionIcon={<NavbarLinkCircle />} />
+      </Link>
+      <NavbarItem label="الرئيسية" leftSectionIcon={<NavbarLinkCircle />} />
+      <NavbarItem label="الرئيسية" leftSectionIcon={<NavbarLinkCircle />} />
+    </NavbarItem>
+  </div>
+);
 
 export default function DrawerSection({ className }: any) {
   return (
@@ -16,28 +30,7 @@ export default function DrawerSection({ className }: any) {
             </div>
 
             {/* links section  */}
-            <div className="pt-3 mt-5 space-y-2">
-              <NavbarItem label="الرئيسية  " leftSectionIcon={<IconHome />} />
-
-              <NavbarItem
-                label="قائمة"
-                leftSectionIcon={<Icon12Hours />}
-                single={false}
-              >
-                <NavbarItem
-                  label="الرئيسية"
-                  leftSectionIcon={<NavbarLinkCircle />}
-                />
-                <NavbarItem
-                  label="الرئيسية"
-                  leftSectionIcon={<NavbarLinkCircle />}
-                />
-                <NavbarItem
-                  label="الرئيسية"
-                  leftSectionIcon={<NavbarLinkCircle />}
-                />
-              </NavbarItem>
-            </div>
+            {NavbarList}
           </Drawer.Body>
         </Drawer.Content>
       </Drawer.Root>
