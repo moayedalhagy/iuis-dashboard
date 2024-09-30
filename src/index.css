@@ -8,5 +8,18 @@
 /* import mantine */
 @import "@mantine/core/styles.layer.css";
 
+
  
- 
+.drawer-links .mantine-NavLink-label {
+   font-size: 1.1rem;
+ }
+
+ /* .mantine-Drawer-body {
+  display: none;
+} */
+
+.mantine-Drawer-inner {
+  max-width: 280px;
+   
+  background: #000;
+}
