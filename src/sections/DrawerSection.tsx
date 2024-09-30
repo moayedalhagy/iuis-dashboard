@@ -1,7 +1,9 @@
-import { Drawer, NavLink } from "@mantine/core";
+import { Drawer } from "@mantine/core";
 
-import { IconHome, IconChevronLeft } from "@tabler/icons-react";
+import { IconHome, Icon12Hours } from "@tabler/icons-react";
 import NavbarLinkCircle from "../components/NavbarLinkCircle";
+import NavbarItem from "../components/NavbarItem";
+
 export default function DrawerSection({ className }: any) {
   return (
     <div className={className}>
@@ -14,43 +16,27 @@ export default function DrawerSection({ className }: any) {
             </div>
 
             {/* links section  */}
-            <div className="pt-3 mt-5">
-              <NavLink
-                label="الرئيسية"
-                variant="light"
-                color="#ffffff"
-                className="rounded-sm hover:bg-main-color-light drawer-links"
-                leftSection={<IconHome size="1.8rem" stroke={1.5} />}
-                rightSection={
-                  <IconChevronLeft
-                    size="0.8rem"
-                    stroke={1.5}
-                    className="mantine-rotate-ltr"
-                  />
-                }
+            <div className="pt-3 mt-5 space-y-2">
+              <NavbarItem label="الرئيسية  " leftSectionIcon={<IconHome />} />
+
+              <NavbarItem
+                label="قائمة"
+                leftSectionIcon={<Icon12Hours />}
+                single={false}
               >
-                <NavLink
+                <NavbarItem
                   label="الرئيسية"
-                  variant="light"
-                  color="#ffffff"
-                  className="rounded-sm hover:bg-main-color-light drawer-links"
-                  leftSection={<NavbarLinkCircle />}
+                  leftSectionIcon={<NavbarLinkCircle />}
                 />
-                <NavLink
+                <NavbarItem
                   label="الرئيسية"
-                  variant="light"
-                  color="#ffffff"
-                  className="rounded-sm hover:bg-main-color-light drawer-links"
-                  leftSection={<NavbarLinkCircle />}
+                  leftSectionIcon={<NavbarLinkCircle />}
                 />
-                <NavLink
+                <NavbarItem
                   label="الرئيسية"
-                  variant="light"
-                  color="#ffffff"
-                  className="rounded-sm hover:bg-main-color-light drawer-links"
-                  leftSection={<NavbarLinkCircle />}
+                  leftSectionIcon={<NavbarLinkCircle />}
                 />
-              </NavLink>
+              </NavbarItem>
             </div>
           </Drawer.Body>
         </Drawer.Content>

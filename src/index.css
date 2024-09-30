@@ -9,17 +9,19 @@
 @import "@mantine/core/styles.layer.css";
 
 
- 
+body {
+  font-family: 'Alexandria', sans-serif;
+}
+
 .drawer-links .mantine-NavLink-label {
-   font-size: 1.1rem;
+   font-size: 1rem;
  }
 
- /* .mantine-Drawer-body {
-  display: none;
-} */
+ 
 
 .mantine-Drawer-inner {
   max-width: 280px;
    
   background: #000;
 }
+
