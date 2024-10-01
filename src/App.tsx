@@ -1,13 +1,14 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Layout from "./Layout";
+import { routes } from "./routes.tsx";
 
 function App() {
   return (
     <Router>
       <Routes>
         <Route path="/" element={<Layout />}>
-          <Route index element={<p> home page</p>} />
-          <Route path="/x" element={<p> x </p>} />
+          <Route index element={routes.home.element} />
+          <Route path="/x" element={routes.x.element} />
         </Route>
       </Routes>
     </Router>
