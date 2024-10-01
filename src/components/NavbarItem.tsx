@@ -1,6 +1,5 @@
 import { NavLink } from "@mantine/core";
 import NavbarItemChevron from "./NavbarItemChevron";
-import { Link } from "react-router-dom";
 
 export default function NavbarItem({
   label,
