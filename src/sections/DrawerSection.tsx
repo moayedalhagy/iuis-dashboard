@@ -1,11 +1,11 @@
 import { Drawer } from "@mantine/core";
-import {
-  IconHome,
-  Icon12Hours,
-  IconNewSection,
-  IconNews,
-} from "@tabler/icons-react";
-import NavbarLinkCircle from "../components/NavbarLinkCircle";
+// import {
+//   IconHome,
+//   Icon12Hours,
+//   IconNewSection,
+//   IconNews,
+// } from "@tabler/icons-react";
+// import NavbarLinkCircle from "../components/NavbarLinkCircle";
 import NavbarItem from "../components/NavbarItem";
 import { Link, useLocation } from "react-router-dom";
 import { routes } from "../routes";
@@ -40,6 +40,7 @@ export default function DrawerSection({ className }: any) {
     </div>
   );
 }
+
 function links(isActiveState: string) {
   return (
     <div className="pt-3 mt-5 space-y-2">
@@ -47,7 +48,7 @@ function links(isActiveState: string) {
       <Link to={"/"}>
         <NavbarItem
           label="الرئيسية"
-          leftSectionIcon={<IconHome />}
+          // leftSectionIcon={<IconHome />}
           isActive={isActiveState == routes.home.path}
         />
       </Link>
@@ -55,38 +56,42 @@ function links(isActiveState: string) {
       {/* News  */}
       <NavbarItem
         label="إدارة الأخبار"
-        leftSectionIcon={<IconNews />}
+        // leftSectionIcon={<IconNews />}
         single={false}
       >
         <Link to={routes.x.path}>
           <NavbarItem
             label="إدارة الخبر"
-            leftSectionIcon={<NavbarLinkCircle />}
+            // leftSectionIcon={<NavbarLinkCircle />}
             isActive={isActiveState == routes.x.path}
           />
         </Link>
         <Link to={routes.x.path}>
           <NavbarItem
             label="إدارة المرئيات"
-            leftSectionIcon={<NavbarLinkCircle />}
+            // leftSectionIcon={<NavbarLinkCircle />}
             isActive={isActiveState == routes.x.path}
           />
         </Link>
       </NavbarItem>
 
       {/* Categories */}
-      <NavbarItem label="قائمة" leftSectionIcon={<IconNews />} single={false}>
+      <NavbarItem
+        label="قائمة"
+        // leftSectionIcon={<IconNews />}
+        single={false}
+      >
         <Link to={routes.x.path}>
           <NavbarItem
             label="إدارة الخبر"
-            leftSectionIcon={<NavbarLinkCircle />}
+            // leftSectionIcon={<NavbarLinkCircle />}
             isActive={isActiveState == routes.x.path}
           />
         </Link>
         <Link to={routes.x.path}>
           <NavbarItem
             label="إدارة المرئيات"
-            leftSectionIcon={<NavbarLinkCircle />}
+            // leftSectionIcon={<NavbarLinkCircle />}
             isActive={isActiveState == routes.x.path}
           />
         </Link>
