@@ -5,6 +5,7 @@ export default function LoginPage() {
   const loginService = useLoginService();
   return (
     <div>
+      <h1>login page</h1>
       <Button
         disabled={loginService.isPending}
         loading={loginService.isPending}

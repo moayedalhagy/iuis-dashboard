@@ -10,6 +10,7 @@ import NavbarItem from "../components/NavbarItem";
 import { Link, useLocation } from "react-router-dom";
 
 import { useEffect, useState } from "react";
+import { PagePathEnum } from "../enums/PagePathEnum";
 
 export default function DrawerSection({ className }: any) {
   const location = useLocation();
@@ -45,47 +46,25 @@ function links(isActiveState: string) {
   return (
     <div className="pt-3 mt-5 space-y-2">
       {/* Home  */}
-      <Link to={"/"}>
+      <Link to={PagePathEnum.home}>
         <NavbarItem
           label="الرئيسية"
           // leftSectionIcon={<IconHome />}
-          isActive={isActiveState == "/"}
+          isActive={isActiveState == PagePathEnum.home}
         />
       </Link>
       {/* Home  */}
-      <Link to={"/login"}>
+      <Link to={PagePathEnum.login}>
         <NavbarItem
           label="تسجيل الدخول"
           // leftSectionIcon={<IconHome />}
-          isActive={isActiveState == "/"}
+          isActive={isActiveState == PagePathEnum.login}
         />
       </Link>
 
       {/* News  */}
       <NavbarItem
         label="إدارة الأخبار"
-        // leftSectionIcon={<IconNews />}
-        single={false}
-      >
-        <Link to={"/x"}>
-          <NavbarItem
-            label="إدارة الخبر"
-            // leftSectionIcon={<NavbarLinkCircle />}
-            isActive={isActiveState == "/x"}
-          />
-        </Link>
-        <Link to={"/x"}>
-          <NavbarItem
-            label="إدارة المرئيات"
-            // leftSectionIcon={<NavbarLinkCircle />}
-            isActive={isActiveState == "/x"}
-          />
-        </Link>
-      </NavbarItem>
-
-      {/* Categories */}
-      <NavbarItem
-        label="قائمة"
         // leftSectionIcon={<IconNews />}
         single={false}
       >
