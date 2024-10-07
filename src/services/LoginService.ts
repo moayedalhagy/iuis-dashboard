@@ -4,10 +4,11 @@ import apiLogin from "../api/ApiLogin";
 import useAuthStore from "../store/AuthStore";
 import NotificationSuccess from "../components/NotificationSuccess";
 import NotificationError from "../components/NotificationError";
+import { useNavigate } from "react-router-dom";
 
 export function useLoginService() {
   const authStore = useAuthStore();
-
+  const navigate = useNavigate();
   return useMutation({
     mutationFn: apiLogin,
 
@@ -18,6 +19,8 @@ export function useLoginService() {
         title: "Login success",
         message: `welcome ${data.data.name}`,
       });
+
+      navigate("/");
     },
 
     onError: (err: any) => {
