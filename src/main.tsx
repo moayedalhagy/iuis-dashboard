@@ -13,9 +13,13 @@ const queryClient = new QueryClient();
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <QueryClientProvider client={queryClient}>
+      <div dir="ltr">
+        <ReactQueryDevtools initialIsOpen={false} />
+      </div>
       <DirectionProvider detectDirection>
         <MantineProvider>
           <Notifications />
+
           <App />
         </MantineProvider>
       </DirectionProvider>
@@ -24,7 +28,4 @@ createRoot(document.getElementById("root")!).render(
 );
 
 {
-  /* <div dir="ltr">
-        <ReactQueryDevtools initialIsOpen={false} />
-      </div> */
 }
