@@ -52,6 +52,14 @@ function links(isActiveState: string) {
           isActive={isActiveState == routes.home.path}
         />
       </Link>
+      {/* Home  */}
+      <Link to={"/login"}>
+        <NavbarItem
+          label="تسجيل الدخول"
+          // leftSectionIcon={<IconHome />}
+          isActive={isActiveState == routes.home.path}
+        />
+      </Link>
 
       {/* News  */}
       <NavbarItem

@@ -9,6 +9,7 @@ function App() {
         <Route path="/" element={<Layout />}>
           <Route index element={routes.home.element} />
           <Route path="/x" element={routes.x.element} />
+          <Route path="/login" element={routes.login.element} />
         </Route>
       </Routes>
     </Router>
