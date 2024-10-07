@@ -8,7 +8,7 @@ import { Drawer } from "@mantine/core";
 // import NavbarLinkCircle from "../components/NavbarLinkCircle";
 import NavbarItem from "../components/NavbarItem";
 import { Link, useLocation } from "react-router-dom";
-import { routes } from "../routes";
+
 import { useEffect, useState } from "react";
 
 export default function DrawerSection({ className }: any) {
@@ -49,7 +49,7 @@ function links(isActiveState: string) {
         <NavbarItem
           label="الرئيسية"
           // leftSectionIcon={<IconHome />}
-          isActive={isActiveState == routes.home.path}
+          isActive={isActiveState == "/"}
         />
       </Link>
       {/* Home  */}
@@ -57,7 +57,7 @@ function links(isActiveState: string) {
         <NavbarItem
           label="تسجيل الدخول"
           // leftSectionIcon={<IconHome />}
-          isActive={isActiveState == routes.home.path}
+          isActive={isActiveState == "/"}
         />
       </Link>
 
@@ -67,18 +67,18 @@ function links(isActiveState: string) {
         // leftSectionIcon={<IconNews />}
         single={false}
       >
-        <Link to={routes.x.path}>
+        <Link to={"/x"}>
           <NavbarItem
             label="إدارة الخبر"
             // leftSectionIcon={<NavbarLinkCircle />}
-            isActive={isActiveState == routes.x.path}
+            isActive={isActiveState == "/x"}
           />
         </Link>
-        <Link to={routes.x.path}>
+        <Link to={"/x"}>
           <NavbarItem
             label="إدارة المرئيات"
             // leftSectionIcon={<NavbarLinkCircle />}
-            isActive={isActiveState == routes.x.path}
+            isActive={isActiveState == "/x"}
           />
         </Link>
       </NavbarItem>
@@ -89,18 +89,18 @@ function links(isActiveState: string) {
         // leftSectionIcon={<IconNews />}
         single={false}
       >
-        <Link to={routes.x.path}>
+        <Link to={"/x"}>
           <NavbarItem
             label="إدارة الخبر"
             // leftSectionIcon={<NavbarLinkCircle />}
-            isActive={isActiveState == routes.x.path}
+            isActive={isActiveState == "/x"}
           />
         </Link>
-        <Link to={routes.x.path}>
+        <Link to={"/x"}>
           <NavbarItem
             label="إدارة المرئيات"
             // leftSectionIcon={<NavbarLinkCircle />}
-            isActive={isActiveState == routes.x.path}
+            isActive={isActiveState == "/x"}
           />
         </Link>
       </NavbarItem>

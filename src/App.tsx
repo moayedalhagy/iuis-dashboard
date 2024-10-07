@@ -1,18 +1,12 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Layout from "./Layout";
-import { routes } from "./routes.tsx";
+import { RouterProvider } from "react-router-dom";
+import { router } from "./router";
+import { Suspense } from "react";
 
 function App() {
   return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<Layout />}>
-          <Route index element={routes.home.element} />
-          <Route path="/x" element={routes.x.element} />
-          <Route path="/login" element={routes.login.element} />
-        </Route>
-      </Routes>
-    </Router>
+    <Suspense fallback={<p className="text-red-900">loading....</p>}>
+      <RouterProvider router={router} />
+    </Suspense>
   );
 }
 
