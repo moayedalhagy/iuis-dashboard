@@ -4,7 +4,7 @@ import { create } from "zustand";
 const API_TOKEN_KEY = "api-token";
 
 interface AuthState {
-  user: string | null;
+  user: object | null;
 
   isAuthenticated: boolean;
   setUser: (user: any) => void;
@@ -19,8 +19,6 @@ const useAuthStore = create<AuthState>((set) => ({
     set({ user, isAuthenticated: true });
 
     localStorage.setItem(API_TOKEN_KEY, user.token);
-
-    console.log(user);
   },
 
   logout: () => {
