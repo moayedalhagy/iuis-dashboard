@@ -5,6 +5,7 @@ import useAuthStore from "../store/AuthStore";
 import NotificationSuccess from "../components/NotificationSuccess";
 import NotificationError from "../components/NotificationError";
 import { useNavigate } from "react-router-dom";
+import { PagePathEnum } from "../enums/PagePathEnum";
 
 export function useLoginService() {
   const authStore = useAuthStore();
@@ -20,7 +21,7 @@ export function useLoginService() {
         message: `welcome ${data.data.name}`,
       });
 
-      navigate("/");
+      navigate(PagePathEnum.home);
     },
 
     onError: (err: any) => {

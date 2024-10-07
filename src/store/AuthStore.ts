@@ -1,7 +1,7 @@
 import { create } from "zustand";
 // import { UserType } from "../types/UserType";
 
-const API_TOKEN_KEY = "api-token";
+export const API_TOKEN_KEY = "api-token";
 
 interface AuthState {
   user: object | null;
@@ -15,10 +15,11 @@ const useAuthStore = create<AuthState>((set) => ({
   user: null,
   token: localStorage.getItem(API_TOKEN_KEY),
   isAuthenticated: !!localStorage.getItem(API_TOKEN_KEY),
-  setUser: (user: any) => {
-    set({ user, isAuthenticated: true });
 
+  setUser: (user: any) => {
     localStorage.setItem(API_TOKEN_KEY, user.token);
+
+    set({ user, isAuthenticated: true });
   },
 
   logout: () => {

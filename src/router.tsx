@@ -1,9 +1,11 @@
-import { createBrowserRouter, Navigate } from "react-router-dom";
+import { createBrowserRouter, Navigate, useNavigate } from "react-router-dom";
 import Layout from "./Layout";
 import React, { PropsWithChildren } from "react";
 import { PagePathEnum } from "./enums/PagePathEnum";
-// import LoginPage from "./pages/Login";
+import useAuthStore, { API_TOKEN_KEY } from "./store/AuthStore";
+import { useQuery } from "@tanstack/react-query";
 
+//pages
 const LoginPage = React.lazy(() => import("./pages/Login"));
 const Home = React.lazy(() => import("./pages/Home"));
 
@@ -14,18 +16,41 @@ export const routes = [
   },
 ];
 
-function AuthRoute({ children }: PropsWithChildren) {
-  if (false) {
-    <Navigate to={PagePathEnum.login} replace />;
-  }
+function checkApiTokenLocalStorage() {
+  const navigate = useNavigate();
+  return useQuery({
+    queryKey: ["check-api-key"],
+    queryFn: () => {
+      if (!!localStorage.getItem(API_TOKEN_KEY) == false) {
+        navigate(PagePathEnum.login);
+        return null;
+      }
+      return null;
+    },
+    refetchInterval: 3000,
+  });
+}
 
-  return <> {children} </>;
+function AuthRoute({ children }: PropsWithChildren) {
+  const authStore = useAuthStore();
+
+  checkApiTokenLocalStorage();
+
+  return authStore.isAuthenticated ? (
+    <> {children} </>
+  ) : (
+    <Navigate to={PagePathEnum.login} replace />
+  );
 }
 
 export const router = createBrowserRouter([
   {
     path: "/",
-    element: <Layout />,
+    element: (
+      <AuthRoute>
+        <Layout />
+      </AuthRoute>
+    ),
     errorElement: <p>not found page</p>,
     children: routes,
   },
