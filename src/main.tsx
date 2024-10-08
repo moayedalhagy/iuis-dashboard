@@ -8,14 +8,20 @@ import { MantineProvider, DirectionProvider } from "@mantine/core";
 
 import { Notifications } from "@mantine/notifications";
 import "@mantine/notifications/styles.css";
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      staleTime: Infinity,
+    },
+  },
+});
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <QueryClientProvider client={queryClient}>
-      <div dir="ltr">
+      {/* <div dir="ltr">
         <ReactQueryDevtools initialIsOpen={false} />
-      </div>
+      </div> */}
       <DirectionProvider detectDirection>
         <MantineProvider>
           <Notifications />
