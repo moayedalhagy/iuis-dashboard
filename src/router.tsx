@@ -8,11 +8,16 @@ import { useQuery } from "@tanstack/react-query";
 //pages
 const LoginPage = React.lazy(() => import("./pages/Login"));
 const Home = React.lazy(() => import("./pages/Home"));
+const News = React.lazy(() => import("./pages/News"));
 
 export const routes = [
   {
     path: PagePathEnum.home,
     element: <Home />,
+  },
+  {
+    path: PagePathEnum.news,
+    element: <News />,
   },
 ];
 

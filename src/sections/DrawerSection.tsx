@@ -23,7 +23,7 @@ export default function DrawerSection({ className }: any) {
 
   return (
     <div className={className}>
-      <Drawer.Root opened onClose={() => {}} radius={"xs"}>
+      <Drawer.Root opened onClose={() => {}} radius={"xs"} lockScroll={false}>
         <Drawer.Content>
           <Drawer.Body className="bg-main-color h-screen text-white">
             {/* logo section  */}
@@ -68,11 +68,11 @@ function links(isActiveState: string) {
         // leftSectionIcon={<IconNews />}
         single={false}
       >
-        <Link to={"/x"}>
+        <Link to={PagePathEnum.news}>
           <NavbarItem
             label="إدارة الخبر"
             // leftSectionIcon={<NavbarLinkCircle />}
-            isActive={isActiveState == "/x"}
+            isActive={isActiveState == PagePathEnum.news}
           />
         </Link>
         <Link to={"/x"}>
