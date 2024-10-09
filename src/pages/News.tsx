@@ -1,5 +1,10 @@
+import ControlLayout from "../components/ControlLayout/ControlLayout";
 import NewsCard from "../components/NewsCard";
 import { useNewsService } from "../services/NewsService";
+import ControlLayoutButton from "../components/ControlLayout/ControlLayoutButton";
+
+import FilterComponent from "../components/FilterComponent";
+import SearchComponent from "../components/SearchComponent";
 
 const oneFake = {
   newsId: 1,
@@ -85,12 +90,27 @@ export default function News() {
   //   const newsService = useNewsService();
 
   //   if (newsService.isLoading) return <p>loading...</p>;
-
+  const filterOne = <FilterComponent label="عـام" data={["2023", "2024"]} />;
+  const filterTwo = (
+    <FilterComponent label="التصنيف" data={["عام", "قرارات"]} />
+  );
   return (
-    <div className="p-5 bg-black  ">
-      <h1 className="text-center text-2xl my-1">News</h1>
-      {/* <p>data len {newsService.data[0].cardImageLink}</p> */}
-      <section className="grid grid-rows-1   grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 bg-red-400">
+    <div className="p-5">
+      {/* Control Elements  */}
+      <ControlLayout
+        button={
+          <ControlLayoutButton
+            label="إضافة خبر"
+            clickHandler={() => {
+              alert("button clicked !");
+            }}
+          />
+        }
+        filters={[filterOne, filterTwo]}
+        search={<SearchComponent />}
+      />
+      {/* page content  */}
+      <section className="hidden grid-rows-1   grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 bg-red-400">
         {fake.map((item) => (
           <div className="bg-red-400 p-4 rounded-lg" key={item.newsId}>
             <NewsCard
