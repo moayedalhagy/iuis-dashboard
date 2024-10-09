@@ -7,7 +7,7 @@ export default function Layout() {
     <div className="flex">
       <DrawerSection />
 
-      <main className="flex-1  px-1 mr-drawer bg-tw-body h-screen">
+      <main className="flex-1  px-1 mr-drawer bg-tw-body  ">
         <Outlet />
       </main>
     </div>

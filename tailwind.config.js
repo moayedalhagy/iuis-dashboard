@@ -9,6 +9,8 @@ export default {
         "main-color": "#024059",
         "main-color-light": "#0e5876",
         "tw-body": "#f8f9fa",
+        info: "#03a679",
+        secondary: "#024059",
       },
       spacing: {
         drawer: "280px", // Adds a custom spacing size for width, height, margin, padding, etc.

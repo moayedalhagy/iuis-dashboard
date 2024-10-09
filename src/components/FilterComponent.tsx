@@ -7,7 +7,7 @@ type ParamType = {
   data: Array<string>;
 };
 export default function FilterComponent({ label, data }: ParamType) {
-  const [value, setValue] = useState<string | null>("");
+  const [value, setValue] = useState<string | null>(null);
   const [isActive, setIsActive] = useState<boolean>(false);
 
   // the element is active when the data selected

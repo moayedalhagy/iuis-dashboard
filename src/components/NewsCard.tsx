@@ -1,5 +1,7 @@
-import { Card, Image, Text, Badge, Button, Group } from "@mantine/core";
+import { Card, Image, Text, Button, Group, Divider } from "@mantine/core";
 import { NewsCardElementType } from "../types/NewsCardTypes";
+import DateCardComponent from "./DateCardComponent";
+import { IconEdit, IconEye, IconTrash } from "@tabler/icons-react";
 
 export default function NewsCard({
   title,
@@ -7,7 +9,7 @@ export default function NewsCard({
   cardImageLink,
 }: NewsCardElementType) {
   return (
-    <Card shadow="sm" padding="lg" radius="md" withBorder>
+    <Card shadow="md" padding="lg" radius="md" withBorder className="max-w-xs ">
       <Card.Section>
         <div className="max-h-[100px] overflow-hidden">
           <Image
@@ -20,19 +22,32 @@ export default function NewsCard({
         </div>
       </Card.Section>
 
-      {/* title  */}
+      {/* content  */}
       <Group justify="space-between" mt="md" mb="xs">
         <Text fw={500}>{title}</Text>
+
+        {/* description  */}
+        <Text size="sm" c="dimmed">
+          {description}
+        </Text>
+
+        <DateCardComponent date="2023-02-02" />
       </Group>
 
-      {/* description  */}
-      <Text size="sm" c="dimmed">
-        {description}
-      </Text>
+      <Divider />
 
-      <Button color="blue" fullWidth mt="md" radius="md">
-        Book classic tour now
-      </Button>
+      {/* buttons  */}
+      <Group justify="center">
+        <Button variant="outline" mt="md" radius="md" color="green" size="xs">
+          <IconEdit />
+        </Button>
+        <Button variant="outline" mt="md" radius="md" color="red" size="xs">
+          <IconTrash />
+        </Button>
+        <Button variant="outline" mt="md" radius="md" color="black" size="xs">
+          <IconEye />
+        </Button>
+      </Group>
     </Card>
   );
 }
