@@ -1,6 +1,8 @@
 import { Popover, Select } from "@mantine/core";
-import { IconFilter } from "@tabler/icons-react";
+import { RiFilter2Line } from "@remixicon/react";
+
 import { useEffect, useState } from "react";
+// c973ab893b
 
 type ParamType = {
   label: string;
@@ -27,9 +29,8 @@ export default function FilterComponent({ label, data }: ParamType) {
             isActive ? activeClass : "border-transparent"
           } cursor-pointer  group-a  border-green-600 flex border-b   pb-0.5 items-baseline justify-between  gap-x-2`}
         >
-          <IconFilter
+          <RiFilter2Line
             className={` ${isActive ? "text-green-600 " : ""} self-center`}
-            size={18}
           />
           <span className={isActive ? "text-green-600 " : ""}>
             {value || label}

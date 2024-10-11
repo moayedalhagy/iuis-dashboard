@@ -1,6 +1,5 @@
-import { IconChevronLeft } from "@tabler/icons-react";
+import { RiArrowRightSLine } from "@remixicon/react";
+
 export default function NavbarItemChevron() {
-  return (
-    <IconChevronLeft size="1rem" stroke={1.4} className="mantine-rotate-ltr" />
-  );
+  return <RiArrowRightSLine className="mantine-rotate-rtl" />;
 }

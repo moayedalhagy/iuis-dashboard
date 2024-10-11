@@ -1,7 +1,7 @@
 import { Card, Image, Text, Button, Group, Divider } from "@mantine/core";
 import { NewsCardElementType } from "../types/NewsCardTypes";
 import DateCardComponent from "./DateCardComponent";
-import { IconEdit, IconEye, IconTrash } from "@tabler/icons-react";
+import { RiDeleteBin7Line, RiEdit2Line, RiEyeLine } from "@remixicon/react";
 
 export default function NewsCard({
   title,
@@ -39,13 +39,13 @@ export default function NewsCard({
       {/* buttons  */}
       <Group justify="center">
         <Button variant="outline" mt="md" radius="md" color="green" size="xs">
-          <IconEdit />
+          <RiEdit2Line />
         </Button>
         <Button variant="outline" mt="md" radius="md" color="red" size="xs">
-          <IconTrash />
+          <RiDeleteBin7Line />
         </Button>
         <Button variant="outline" mt="md" radius="md" color="black" size="xs">
-          <IconEye />
+          <RiEyeLine />
         </Button>
       </Group>
     </Card>

@@ -1,16 +1,12 @@
 import { Drawer } from "@mantine/core";
-// import {
-//   IconHome,
-//   Icon12Hours,
-//   IconNewSection,
-//   IconNews,
-// } from "@tabler/icons-react";
-// import NavbarLinkCircle from "../components/NavbarLinkCircle";
+
+import NavbarLinkCircle from "../components/NavbarLinkCircle";
 import NavbarItem from "../components/NavbarItem";
 import { Link, useLocation } from "react-router-dom";
 
 import { useEffect, useState } from "react";
 import { PagePathEnum } from "../enums/PagePathEnum";
+import { RiHome4Line, RiNewsLine } from "@remixicon/react";
 
 export default function DrawerSection({ className }: any) {
   const location = useLocation();
@@ -49,7 +45,7 @@ function links(isActiveState: string) {
       <Link to={PagePathEnum.home}>
         <NavbarItem
           label="الرئيسية"
-          // leftSectionIcon={<IconHome />}
+          leftSectionIcon={<RiHome4Line />}
           isActive={isActiveState == PagePathEnum.home}
         />
       </Link>
@@ -57,7 +53,7 @@ function links(isActiveState: string) {
       <Link to={PagePathEnum.login}>
         <NavbarItem
           label="تسجيل الدخول"
-          // leftSectionIcon={<IconHome />}
+          leftSectionIcon={<RiHome4Line />}
           isActive={isActiveState == PagePathEnum.login}
         />
       </Link>
@@ -65,13 +61,13 @@ function links(isActiveState: string) {
       {/* News  */}
       <NavbarItem
         label="إدارة الأخبار"
-        // leftSectionIcon={<IconNews />}
+        leftSectionIcon={<RiNewsLine />}
         single={false}
       >
         <Link to={PagePathEnum.news}>
           <NavbarItem
             label="إدارة الخبر"
-            // leftSectionIcon={<NavbarLinkCircle />}
+            leftSectionIcon={<NavbarLinkCircle />}
             isActive={isActiveState == PagePathEnum.news}
           />
         </Link>

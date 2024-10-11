@@ -1,6 +1,6 @@
 import { Input } from "@mantine/core";
-import { IconSearch } from "@tabler/icons-react";
+import { RiSearchLine } from "@remixicon/react";
 
 export default function SearchComponent() {
-  return <Input placeholder="بحث" leftSection={<IconSearch size={18} />} />;
+  return <Input placeholder="بحث" leftSection={<RiSearchLine size={20} />} />;
 }

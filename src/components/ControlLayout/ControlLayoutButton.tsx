@@ -1,5 +1,5 @@
 import { Button } from "@mantine/core";
-import { IconCirclePlusFilled } from "@tabler/icons-react";
+import { RiAddCircleFill } from "@remixicon/react";
 
 type ParamType = {
   label: string;
@@ -14,7 +14,7 @@ export default function ControlLayoutButton({
       onClick={clickHandler}
       color="#03A679"
       radius="sm"
-      leftSection={<IconCirclePlusFilled />}
+      leftSection={<RiAddCircleFill />}
       pl={"40px"}
     >
       {label}
