@@ -63,6 +63,7 @@ function links(isActiveState: string) {
         label="إدارة الأخبار"
         leftSectionIcon={<RiNewsLine />}
         single={false}
+        // opened={isActiveState}
       >
         <Link to={PagePathEnum.news}>
           <NavbarItem
@@ -71,11 +72,11 @@ function links(isActiveState: string) {
             isActive={isActiveState == PagePathEnum.news}
           />
         </Link>
-        <Link to={"/x"}>
+        <Link to={PagePathEnum.visuals}>
           <NavbarItem
             label="إدارة المرئيات"
-            // leftSectionIcon={<NavbarLinkCircle />}
-            isActive={isActiveState == "/x"}
+            leftSectionIcon={<NavbarLinkCircle />}
+            isActive={isActiveState == PagePathEnum.visuals}
           />
         </Link>
       </NavbarItem>

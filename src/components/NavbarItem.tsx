@@ -7,12 +7,14 @@ export default function NavbarItem({
   single = true,
   children,
   isActive = false,
+  opened = false,
 }: {
   label: string;
   leftSectionIcon?: React.ReactNode;
   single?: boolean;
   children?: React.ReactNode;
   isActive?: boolean;
+  opened?: boolean;
 }) {
   return (
     <NavLink
@@ -24,6 +26,7 @@ export default function NavbarItem({
       rightSection={!single && <NavbarItemChevron />}
       active={isActive}
       component="span"
+      // opened={opened}
     >
       {children}
     </NavLink>

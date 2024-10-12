@@ -9,6 +9,7 @@ import { useQuery } from "@tanstack/react-query";
 const LoginPage = React.lazy(() => import("./pages/Login"));
 const Home = React.lazy(() => import("./pages/Home"));
 const News = React.lazy(() => import("./pages/News"));
+const Visuals = React.lazy(() => import("./pages/Visuals"));
 
 export const routes = [
   {
@@ -18,6 +19,10 @@ export const routes = [
   {
     path: PagePathEnum.news,
     element: <News />,
+  },
+  {
+    path: PagePathEnum.visuals,
+    element: <Visuals />,
   },
 ];
 
