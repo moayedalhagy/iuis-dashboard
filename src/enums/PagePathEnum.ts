@@ -3,4 +3,7 @@ export enum PagePathEnum {
   login = "/auth/login",
   news = "/news",
   visuals = "/visuals",
+  categoryProgram = "/category-program",
+  categoryNews = "/category-news",
+  categoryDecisions = "/category-decisions",
 }

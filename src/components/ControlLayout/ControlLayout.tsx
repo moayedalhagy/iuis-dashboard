@@ -4,7 +4,7 @@ export default function ControlLayout({
   search,
 }: {
   button: React.ReactNode;
-  filters: Array<React.ReactNode>;
+  filters?: Array<React.ReactNode> | null;
   search: React.ReactNode;
 }) {
   return (
@@ -12,7 +12,7 @@ export default function ControlLayout({
       <div className="flex gap-x-5 justify-between items-center">
         <div>{button}</div>
         <div className="flex gap-x-3">
-          {filters.map((filter, index) => (
+          {filters?.map((filter, index) => (
             <div key={index}> {filter}</div>
           ))}
         </div>

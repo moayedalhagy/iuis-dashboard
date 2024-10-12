@@ -6,7 +6,7 @@ import { Link, useLocation } from "react-router-dom";
 
 import { useEffect, useState } from "react";
 import { PagePathEnum } from "../enums/PagePathEnum";
-import { RiHome4Line, RiNewsLine } from "@remixicon/react";
+import { RiBookShelfLine, RiHome4Line, RiNewsLine } from "@remixicon/react";
 
 export default function DrawerSection({ className }: any) {
   const location = useLocation();
@@ -77,6 +77,36 @@ function links(isActiveState: string) {
             label="إدارة المرئيات"
             leftSectionIcon={<NavbarLinkCircle />}
             isActive={isActiveState == PagePathEnum.visuals}
+          />
+        </Link>
+      </NavbarItem>
+
+      {/* Categories  */}
+      <NavbarItem
+        label="إدارة التصنيفات"
+        leftSectionIcon={<RiBookShelfLine />}
+        single={false}
+        // opened={isActiveState}
+      >
+        <Link to={PagePathEnum.categoryProgram}>
+          <NavbarItem
+            label="البرامج الاكاديمية"
+            leftSectionIcon={<NavbarLinkCircle />}
+            isActive={isActiveState == PagePathEnum.categoryProgram}
+          />
+        </Link>
+        <Link to={PagePathEnum.categoryNews}>
+          <NavbarItem
+            label="الأخبار"
+            leftSectionIcon={<NavbarLinkCircle />}
+            isActive={isActiveState == PagePathEnum.categoryNews}
+          />
+        </Link>
+        <Link to={PagePathEnum.categoryDecisions}>
+          <NavbarItem
+            label="الأنظمة والقرارات"
+            leftSectionIcon={<NavbarLinkCircle />}
+            isActive={isActiveState == PagePathEnum.categoryDecisions}
           />
         </Link>
       </NavbarItem>
