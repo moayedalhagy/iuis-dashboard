@@ -25,3 +25,12 @@ body {
   background: #000;
 }
 
+
+
+ 
+ 
+  /* hide scrolbar on modal  */
+.m_1b7284a3  {
+  -ms-overflow-style: none; /* للإنترنت إكسبلورر */
+  scrollbar-width: none; /* للفايرفوكس */
+}

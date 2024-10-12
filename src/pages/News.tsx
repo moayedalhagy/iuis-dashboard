@@ -6,6 +6,9 @@ import ControlLayoutButton from "../components/ControlLayout/ControlLayoutButton
 import FilterComponent from "../components/FilterComponent";
 import SearchComponent from "../components/SearchComponent";
 import { fakeCardNews } from "../fake";
+import AddNewsModal from "../sections/AddNewsModal";
+
+import { useDisclosure } from "@mantine/hooks";
 
 export default function News() {
   //   const newsService = useNewsService();
@@ -15,18 +18,20 @@ export default function News() {
   const filterTwo = (
     <FilterComponent label="التصنيف" data={["عام", "قرارات"]} />
   );
+
+  const [opened, { open, close }] = useDisclosure(false);
   return (
     <div className="p-5">
+      <AddNewsModal
+        modal={{
+          opened: opened,
+          onOpen: open,
+          onClose: close,
+        }}
+      />
       {/* Control Elements  */}
       <ControlLayout
-        button={
-          <ControlLayoutButton
-            label="إضافة خبر"
-            clickHandler={() => {
-              alert("button clicked !");
-            }}
-          />
-        }
+        button={<ControlLayoutButton label="إضافة خبر" clickHandler={open} />}
         filters={[filterOne, filterTwo]}
         search={<SearchComponent />}
       />

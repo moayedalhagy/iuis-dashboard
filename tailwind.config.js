@@ -9,6 +9,7 @@ export default {
         "main-color": "#024059",
         "main-color-light": "#0e5876",
         "tw-body": "#f8f9fa",
+        "dark-green": "#02735F",
         info: "#03a679",
         secondary: "#024059",
       },

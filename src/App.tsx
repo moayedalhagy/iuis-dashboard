@@ -13,3 +13,4 @@ function App() {
 export default App;
 
 // https://remixicon.com/
+// https://github.com/Remix-Design/RemixIcon
