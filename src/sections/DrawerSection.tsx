@@ -1,4 +1,4 @@
-import { Drawer } from "@mantine/core";
+import { Drawer, Space } from "@mantine/core";
 
 import NavbarLinkCircle from "../components/NavbarLinkCircle";
 import NavbarItem from "../components/NavbarItem";
@@ -6,7 +6,13 @@ import { Link, useLocation } from "react-router-dom";
 
 import { useEffect, useState } from "react";
 import { PagePathEnum } from "../enums/PagePathEnum";
-import { RiBookShelfLine, RiHome4Line, RiNewsLine } from "@remixicon/react";
+import {
+  RiBookShelfLine,
+  RiGradienterLine,
+  RiGraduationCapLine,
+  RiHome4Line,
+  RiNewsLine,
+} from "@remixicon/react";
 
 export default function DrawerSection({ className }: any) {
   const location = useLocation();
@@ -110,6 +116,16 @@ function links(isActiveState: string) {
           />
         </Link>
       </NavbarItem>
+
+      <Space mt="1" />
+
+      <Link to={PagePathEnum.academicProgram}>
+        <NavbarItem
+          label="البرامج الأكاديمية"
+          leftSectionIcon={<RiGraduationCapLine />}
+          isActive={isActiveState == PagePathEnum.academicProgram}
+        />
+      </Link>
     </div>
   );
 }

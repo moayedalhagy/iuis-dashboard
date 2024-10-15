@@ -6,4 +6,5 @@ export enum PagePathEnum {
   categoryProgram = "/category-program",
   categoryNews = "/category-news",
   categoryDecisions = "/category-decisions",
+  academicProgram = "/academic-programs",
 }

@@ -140,3 +140,54 @@ export const fakeCardNews = [
     newsCategoryName: "الصنف الاول",
   },
 ];
+
+export const AcademicProgramFakeData = [
+  {
+    id: 1,
+    order: 1,
+    category: "برامج الدبلوم",
+    name: " المعهد التخصصي لتكوين الأئمة والخطباء",
+    image: "https://picsum.photos/200/300",
+    status: true,
+  },
+  {
+    id: 2,
+    order: 2,
+    category: "برامج الدبلوم",
+    name: "المعهد التخصصي لتكوين الأئمة والخطباء",
+    image: "https://picsum.photos/200/300",
+    status: false,
+  },
+  {
+    id: 3,
+    order: 3,
+    category: "برامج الدبلوم",
+    name: "المعهد التخصصي لتكوين الأئمة والخطباء",
+    image: "https://picsum.photos/200/300",
+    status: false,
+  },
+  {
+    id: 4,
+    order: 4,
+    category: "برامج الدبلوم",
+    name: "المعهد التخصصي لتكوين الأئمة والخطباء",
+    image: "https://picsum.photos/200/300",
+    status: false,
+  },
+  {
+    id: 5,
+    order: 5,
+    category: "برامج الدبلوم",
+    name: "المعهد التخصصي لتكوين الأئمة والخطباء",
+    image: "https://picsum.photos/200/300",
+    status: false,
+  },
+  {
+    id: 6,
+    order: 6,
+    category: "برامج الدبلوم",
+    name: "المعهد التخصصي لتكوين الأئمة والخطباء",
+    image: "https://picsum.photos/200/300",
+    status: false,
+  },
+];
