@@ -20,12 +20,16 @@ const rowRoundedRight = "rounded-tr-md  rounded-br-md  ";
 const rowRoundedLeft = "rounded-tl-md  rounded-bl-md  ";
 export default function AcademicProgramRow({ _class, data }: ParamType) {
   return (
-    <Table.Tr key={data.name} className={`${_class} text-center`}>
+    <Table.Tr
+      key={data.name}
+      className={`${_class} text-center   select-none`}
+      item-data={JSON.stringify({ id: data.id, order: data.order })}
+    >
       <Table.Td className={`${rowRoundedRight} `}>
         <div className="flex   gap-x-3">
           <Image
             src="./images/move.svg"
-            className="max-h-[22px]   cursor-grab      "
+            className="max-h-[22px]   cursor-grab  drag-handle"
           />
           <span>{data.order}</span>
         </div>
