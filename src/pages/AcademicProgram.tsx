@@ -13,6 +13,8 @@ import AcademicProgramRow from "../components/AcademicProgramRow";
 import { Table } from "@mantine/core";
 import { ReactSortable, Sortable } from "react-sortablejs";
 import { useState } from "react";
+import AddAcademicProgramModal from "../sections/AddAcademicProgramModal";
+import AddAcademicProgramDetailsModal from "../sections/AddAcademicProgramDetailsModal";
 
 interface ItemType {
   id: number;
@@ -24,7 +26,7 @@ export default function AcademicProgram() {
   const fakeImage = "https://www.youtube.com/embed/PlKeif7wAzY";
   //   if (newsService.isLoading) return <p>loading...</p>;
   const [data, setData] = useState(AcademicProgramFakeData);
-
+  const [detailsData, setDetailsData] = useState({});
   const tableHeaders = [
     "الترتيب",
     "التصنيف",
@@ -35,9 +37,13 @@ export default function AcademicProgram() {
     "الحالة",
   ];
   const [opened, { open, close }] = useDisclosure(false);
+  const [
+    detailModalOpened,
+    { open: detailModalOpen, close: detailModalClose },
+  ] = useDisclosure(false);
   return (
     <div className="p-5">
-      <AddVisualsModal
+      <AddAcademicProgramModal
         modal={{
           opened: opened,
           onOpen: open,
@@ -45,9 +51,20 @@ export default function AcademicProgram() {
         }}
       />
 
+      <AddAcademicProgramDetailsModal
+        modal={{
+          opened: detailModalOpened,
+          onOpen: detailModalOpen,
+          onClose: detailModalClose,
+        }}
+        detailsData={detailsData}
+      />
+
       {/* Control Elements  */}
       <ControlLayout
-        button={<ControlLayoutButton label="إضافة فيديو" clickHandler={open} />}
+        button={
+          <ControlLayoutButton label="إضافة برنامج " clickHandler={open} />
+        }
         search={<SearchComponent />}
       />
 
@@ -91,6 +108,10 @@ export default function AcademicProgram() {
                 data={item}
                 _class="bg-tw-body"
                 key={item.order}
+                addDetails={(event, x) => {
+                  setDetailsData(x);
+                  detailModalOpen();
+                }}
               />
             ))}
           </ReactSortable>

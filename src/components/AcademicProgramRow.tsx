@@ -14,11 +14,16 @@ type RowData = {
 type ParamType = {
   _class?: string;
   data: RowData;
+  addDetails: (event: any, data: {}) => void;
 };
 
 const rowRoundedRight = "rounded-tr-md  rounded-br-md  ";
 const rowRoundedLeft = "rounded-tl-md  rounded-bl-md  ";
-export default function AcademicProgramRow({ _class, data }: ParamType) {
+export default function AcademicProgramRow({
+  _class,
+  data,
+  addDetails,
+}: ParamType) {
   return (
     <Table.Tr
       key={data.name}
@@ -45,7 +50,11 @@ export default function AcademicProgramRow({ _class, data }: ParamType) {
       </Table.Td>
       <Table.Td>
         <div className="flex gap-x-2">
-          <Button size="xs" color="#03A679">
+          <Button
+            size="xs"
+            color="#03A679"
+            onClick={(event) => addDetails(event, data)}
+          >
             إضافة تعريف
           </Button>
           <Button size="xs" color="#147CA6">
@@ -87,7 +96,7 @@ export default function AcademicProgramRow({ _class, data }: ParamType) {
 
       <Table.Td className={`${rowRoundedLeft} `}>
         {" "}
-        <Switch defaultChecked color="#03a679" />
+        <Switch defaultChecked color="#03a679" readOnly />
       </Table.Td>
     </Table.Tr>
   );
