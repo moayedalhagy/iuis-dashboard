@@ -14,6 +14,7 @@ const CategoryProgram = React.lazy(() => import("./pages/CategoryProgram"));
 const CategoryNews = React.lazy(() => import("./pages/CategoryNews"));
 const CategoryDecisions = React.lazy(() => import("./pages/CategoryDecisions"));
 const AcademicProgram = React.lazy(() => import("./pages/AcademicProgram"));
+const Decisions = React.lazy(() => import("./pages/Decisions"));
 
 export const routes = [
   {
@@ -43,6 +44,10 @@ export const routes = [
   {
     path: PagePathEnum.academicProgram,
     element: <AcademicProgram />,
+  },
+  {
+    path: PagePathEnum.decisions,
+    element: <Decisions />,
   },
 ];
 

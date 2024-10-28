@@ -12,6 +12,7 @@ import {
   RiGraduationCapLine,
   RiHome4Line,
   RiNewsLine,
+  RiNewspaperLine,
 } from "@remixicon/react";
 
 export default function DrawerSection({ className }: any) {
@@ -124,6 +125,13 @@ function links(isActiveState: string) {
           label="البرامج الأكاديمية"
           leftSectionIcon={<RiGraduationCapLine />}
           isActive={isActiveState == PagePathEnum.academicProgram}
+        />
+      </Link>
+      <Link to={PagePathEnum.decisions}>
+        <NavbarItem
+          label="الأنظمة والقرارات"
+          leftSectionIcon={<RiNewspaperLine />}
+          isActive={isActiveState == PagePathEnum.decisions}
         />
       </Link>
     </div>
