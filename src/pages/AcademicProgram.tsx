@@ -102,7 +102,8 @@ export default function AcademicProgram() {
                 data={item}
                 _class="bg-tw-body"
                 key={item.order}
-                addDetails={(event, x) => {
+                /* eslint-disable @typescript-eslint/no-unused-vars */
+                addDetails={(_event, x) => {
                   setDetailsData(x);
                   detailModalOpen();
                 }}
