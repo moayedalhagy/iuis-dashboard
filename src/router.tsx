@@ -6,6 +6,7 @@ import useAuthStore, { API_TOKEN_KEY } from "./store/AuthStore";
 import { useQuery } from "@tanstack/react-query";
 import Faqs from "./pages/settings/Faqs";
 import SocialMedia from "./pages/settings/SocialMedia";
+import Testimonials from "./pages/Testimonials";
 
 //pages
 const LoginPage = React.lazy(() => import("./pages/Login"));
@@ -63,6 +64,10 @@ export const routes = [
   {
     path: PagePath.settings.socialMedia,
     element: <SocialMedia />,
+  },
+  {
+    path: PagePath.settings.testimonials,
+    element: <Testimonials />,
   },
 ];
 

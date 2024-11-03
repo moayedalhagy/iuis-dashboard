@@ -16,7 +16,7 @@ export default function MainPageItem() {
       />
       {/* Image  */}
 
-      <div className="my-3 max-w-[250px] max-h-[250px] bg-red-300 overflow-hidden rounded-md">
+      <div className="my-3 max-w-[250px] max-h-[250px]   overflow-hidden rounded-md">
         <Image
           src={"https://picsum.photos/300/300"}
           height={160}
