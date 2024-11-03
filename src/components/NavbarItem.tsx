@@ -7,14 +7,14 @@ export default function NavbarItem({
   single = true,
   children,
   isActive = false,
-  opened = false,
-}: {
+}: // opened = false,
+{
   label: string;
   leftSectionIcon?: React.ReactNode;
   single?: boolean;
   children?: React.ReactNode;
   isActive?: boolean;
-  opened?: boolean;
+  // opened?: boolean;
 }) {
   return (
     <NavLink

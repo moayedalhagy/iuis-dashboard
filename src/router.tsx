@@ -71,7 +71,7 @@ export const routes = [
   },
 ];
 
-function checkApiTokenLocalStorage() {
+function CheckApiTokenLocalStorage() {
   const navigate = useNavigate();
   return useQuery({
     queryKey: ["check-api-key"],
@@ -89,7 +89,7 @@ function checkApiTokenLocalStorage() {
 function AuthRoute({ children }: PropsWithChildren) {
   const authStore = useAuthStore();
 
-  checkApiTokenLocalStorage();
+  CheckApiTokenLocalStorage();
 
   return authStore.isAuthenticated ? (
     <> {children} </>

@@ -1,7 +1,7 @@
 import ModalComponent from "../components/ModalComponent";
 import { TextInput, Box, Input, Button, Group } from "@mantine/core";
 
-import { useEditor } from "@tiptap/react";
+import { Editor, useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import { RichTextEditor } from "@mantine/tiptap";
 
@@ -17,13 +17,13 @@ type ModalParamType = {
 };
 type ParamType = {
   modal: ModalParamType;
-  detailsData: {};
+  detailsData: object;
 };
 
 export default function AddAcademicProgramDetailsModal({
   modal,
-  detailsData,
-}: ParamType) {
+}: // detailsData,
+ParamType) {
   const editor = useEditor({
     extensions: [StarterKit],
     content:
@@ -55,7 +55,7 @@ export default function AddAcademicProgramDetailsModal({
     </ModalComponent>
   );
 }
-function TextBox({ editor }: any) {
+function TextBox({ editor }: { editor: Editor | null }) {
   return (
     <Box w={"full"} className="bg-tw-body shadow p-3 ">
       <TextInput

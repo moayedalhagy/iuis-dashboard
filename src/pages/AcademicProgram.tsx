@@ -6,24 +6,18 @@ import ControlLayoutButton from "../components/ControlLayout/ControlLayoutButton
 import SearchComponent from "../components/SearchComponent";
 
 import { useDisclosure } from "@mantine/hooks";
-import AddVisualsModal from "../sections/AddVisualsModal";
 
 import { AcademicProgramFakeData } from "../fake";
 import AcademicProgramRow from "../components/AcademicProgramRow";
 import { Table } from "@mantine/core";
-import { ReactSortable, Sortable } from "react-sortablejs";
+import { ReactSortable } from "react-sortablejs";
 import { useState } from "react";
 import AddAcademicProgramModal from "../sections/AddAcademicProgramModal";
 import AddAcademicProgramDetailsModal from "../sections/AddAcademicProgramDetailsModal";
 
-interface ItemType {
-  id: number;
-  name: string;
-}
-
 export default function AcademicProgram() {
   //   const newsService = useNewsService();
-  const fakeImage = "https://www.youtube.com/embed/PlKeif7wAzY";
+  // const fakeImage = "https://www.youtube.com/embed/PlKeif7wAzY";
   //   if (newsService.isLoading) return <p>loading...</p>;
   const [data, setData] = useState(AcademicProgramFakeData);
   const [detailsData, setDetailsData] = useState({});

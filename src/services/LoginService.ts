@@ -25,10 +25,11 @@ export function useLoginService() {
     },
 
     onError: (err: any) => {
-      let _err = err!.response.data;
+      const _err = err!.response.data;
 
-      for (let key in _err.errors) {
-        if (_err.errors.hasOwnProperty(key)) {
+      for (const key in _err.errors) {
+        // _err.errors.hasOwnProperty(key)
+        if (Object.prototype.hasOwnProperty.call(_err.errors, key)) {
           NotificationError({
             title: "validation error",
             message: `${_err.errors[key]}`,

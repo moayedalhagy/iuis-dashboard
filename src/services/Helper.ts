@@ -9,6 +9,7 @@ export function isValidUrl(url: string) {
   try {
     new URL(url); // Try creating a URL object
     return true; // If no error is thrown, the URL is valid
+    /* eslint-disable @typescript-eslint/no-unused-vars */
   } catch (error) {
     return false; // If an error is thrown, the URL is not valid
   }

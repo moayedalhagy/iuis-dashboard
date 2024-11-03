@@ -1,12 +1,8 @@
 import ModalComponent from "../components/ModalComponent";
 import { Select, TextInput, Switch, Button, Image } from "@mantine/core";
 
-import { useEditor } from "@tiptap/react";
-import StarterKit from "@tiptap/starter-kit";
-
 import "@mantine/tiptap/styles.css";
 
-import { useState } from "react";
 import { RiGalleryLine } from "@remixicon/react";
 
 type ModalParamType = {

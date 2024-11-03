@@ -14,7 +14,7 @@ type RowData = {
 type ParamType = {
   _class?: string;
   data: RowData;
-  addDetails: (event: any, data: {}) => void;
+  addDetails: (event: React.MouseEvent, data: object) => void;
 };
 
 const rowRoundedRight = "rounded-tr-md  rounded-br-md  ";

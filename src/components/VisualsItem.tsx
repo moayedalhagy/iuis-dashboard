@@ -3,7 +3,7 @@ import { RiDeleteBin7Line, RiEdit2Line, RiEyeLine } from "@remixicon/react";
 import { VisualsItemElementType } from "../types/VisualsItemTypes";
 
 export default function VisualsItem({
-  id,
+  // id,
   link,
   date,
   title,

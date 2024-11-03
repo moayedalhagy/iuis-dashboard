@@ -9,7 +9,7 @@ import { useDisclosure } from "@mantine/hooks";
 
 import { FaqsFakeData } from "../../fake";
 import { Table } from "@mantine/core";
-import { ReactSortable, Sortable } from "react-sortablejs";
+import { ReactSortable } from "react-sortablejs";
 import { useState } from "react";
 
 import FaqsRow from "../../components/FaqsRow";

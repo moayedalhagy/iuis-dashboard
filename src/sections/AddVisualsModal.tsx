@@ -1,23 +1,7 @@
 import ModalComponent from "../components/ModalComponent";
-import {
-  TagsInput,
-  Button,
-  Divider,
-  Image,
-  Input,
-  Space,
-  Textarea,
-  TextInput,
-  Alert,
-} from "@mantine/core";
-import { RichTextEditor } from "@mantine/tiptap";
-
-import { useEditor } from "@tiptap/react";
-import StarterKit from "@tiptap/starter-kit";
+import { Textarea, TextInput, Alert } from "@mantine/core";
 
 import "@mantine/tiptap/styles.css";
-import { RiGalleryLine } from "@remixicon/react";
-import RemoveableImage from "../components/RemoveableImage";
 import { useState } from "react";
 import { isValidUrl, urlHandler } from "../services/Helper";
 
@@ -31,10 +15,6 @@ type ParamType = {
 };
 
 export default function AddVisualsModal({ modal }: ParamType) {
-  const editor = useEditor({
-    extensions: [StarterKit],
-  });
-
   const [previewOk, setPreviewOk] = useState("");
 
   return (

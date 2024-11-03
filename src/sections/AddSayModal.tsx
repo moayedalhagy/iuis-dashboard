@@ -1,11 +1,9 @@
 import ModalComponent from "../components/ModalComponent";
 import {
-  TagsInput,
   Button,
   Divider,
   Image,
   Input,
-  Space,
   Textarea,
   TextInput,
 } from "@mantine/core";
@@ -16,9 +14,6 @@ import StarterKit from "@tiptap/starter-kit";
 
 import "@mantine/tiptap/styles.css";
 import { RiGalleryLine } from "@remixicon/react";
-import RemoveableImage from "../components/RemoveableImage";
-import { useState } from "react";
-import VideoInput from "../components/VideoInput";
 
 type ModalParamType = {
   opened: boolean;

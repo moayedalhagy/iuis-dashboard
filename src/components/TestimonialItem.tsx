@@ -2,8 +2,8 @@ import { Button, Group, Image } from "@mantine/core";
 import { RiDeleteBin7Line, RiEdit2Line, RiEyeLine } from "@remixicon/react";
 import { TestimonialItemElementTypes } from "../types/TestimonialItemTypes";
 export default function TestimonialItem({
-  id,
-  link,
+  // id,
+  // link,
   text,
   title,
 }: TestimonialItemElementTypes) {

@@ -9,7 +9,6 @@ import { PagePath } from "../PagePath";
 import {
   RiBookShelfLine,
   RiEqualizerLine,
-  RiGradienterLine,
   RiGraduationCapLine,
   RiHome4Line,
   RiNewsLine,
