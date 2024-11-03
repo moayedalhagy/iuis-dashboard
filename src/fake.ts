@@ -191,3 +191,48 @@ export const AcademicProgramFakeData = [
     status: false,
   },
 ];
+
+export const FaqsFakeData = [
+  {
+    id: 1,
+    order: 1,
+    question: "برامج الدبلوم",
+    answer: " المعهد التخصصي لتكوين الأئمة والخطباء",
+    status: true,
+  },
+  {
+    id: 2,
+    order: 2,
+    question: "برامج الدبلوم",
+    answer: " المعهد التخصصي لتكوين الأئمة والخطباء",
+    status: false,
+  },
+  {
+    id: 3,
+    order: 3,
+    question: "برامج الدبلوم",
+    answer: " المعهد التخصصي لتكوين الأئمة والخطباء",
+    status: false,
+  },
+  {
+    id: 4,
+    order: 4,
+    question: "برامج الدبلوم",
+    answer: " المعهد التخصصي لتكوين الأئمة والخطباء",
+    status: false,
+  },
+  {
+    id: 5,
+    order: 5,
+    question: "برامج الدبلوم",
+    answer: " المعهد التخصصي لتكوين الأئمة والخطباء",
+    status: false,
+  },
+  {
+    id: 6,
+    order: 6,
+    question: "برامج الدبلوم",
+    answer: " المعهد التخصصي لتكوين الأئمة والخطباء",
+    status: false,
+  },
+];

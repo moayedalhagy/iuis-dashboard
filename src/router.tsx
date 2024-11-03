@@ -4,6 +4,7 @@ import React, { PropsWithChildren } from "react";
 import { PagePath } from "./PagePath";
 import useAuthStore, { API_TOKEN_KEY } from "./store/AuthStore";
 import { useQuery } from "@tanstack/react-query";
+import Faqs from "./pages/settings/Faqs";
 
 //pages
 const LoginPage = React.lazy(() => import("./pages/Login"));
@@ -53,6 +54,10 @@ export const routes = [
   {
     path: PagePath.settings.pagesManger,
     element: <PagesManger />,
+  },
+  {
+    path: PagePath.settings.faqs,
+    element: <Faqs />,
   },
 ];
 
