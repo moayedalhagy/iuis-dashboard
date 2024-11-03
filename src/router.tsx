@@ -1,7 +1,7 @@
 import { createBrowserRouter, Navigate, useNavigate } from "react-router-dom";
 import Layout from "./Layout";
 import React, { PropsWithChildren } from "react";
-import { PagePathEnum } from "./enums/PagePathEnum";
+import { PagePath } from "./PagePath";
 import useAuthStore, { API_TOKEN_KEY } from "./store/AuthStore";
 import { useQuery } from "@tanstack/react-query";
 
@@ -15,39 +15,44 @@ const CategoryNews = React.lazy(() => import("./pages/CategoryNews"));
 const CategoryDecisions = React.lazy(() => import("./pages/CategoryDecisions"));
 const AcademicProgram = React.lazy(() => import("./pages/AcademicProgram"));
 const Decisions = React.lazy(() => import("./pages/Decisions"));
+const PagesManger = React.lazy(() => import("./pages/settings/PagesManger"));
 
 export const routes = [
   {
-    path: PagePathEnum.home,
+    path: PagePath.home,
     element: <Home />,
   },
   {
-    path: PagePathEnum.news,
+    path: PagePath.news,
     element: <News />,
   },
   {
-    path: PagePathEnum.visuals,
+    path: PagePath.visuals,
     element: <Visuals />,
   },
   {
-    path: PagePathEnum.categoryProgram,
+    path: PagePath.categoryProgram,
     element: <CategoryProgram />,
   },
   {
-    path: PagePathEnum.categoryNews,
+    path: PagePath.categoryNews,
     element: <CategoryNews />,
   },
   {
-    path: PagePathEnum.categoryDecisions,
+    path: PagePath.categoryDecisions,
     element: <CategoryDecisions />,
   },
   {
-    path: PagePathEnum.academicProgram,
+    path: PagePath.academicProgram,
     element: <AcademicProgram />,
   },
   {
-    path: PagePathEnum.decisions,
+    path: PagePath.decisions,
     element: <Decisions />,
+  },
+  {
+    path: PagePath.settings.pagesManger,
+    element: <PagesManger />,
   },
 ];
 
@@ -57,7 +62,7 @@ function checkApiTokenLocalStorage() {
     queryKey: ["check-api-key"],
     queryFn: () => {
       if (!!localStorage.getItem(API_TOKEN_KEY) == false) {
-        navigate(PagePathEnum.login);
+        navigate(PagePath.login);
         return null;
       }
       return null;
@@ -74,7 +79,7 @@ function AuthRoute({ children }: PropsWithChildren) {
   return authStore.isAuthenticated ? (
     <> {children} </>
   ) : (
-    <Navigate to={PagePathEnum.login} replace />
+    <Navigate to={PagePath.login} replace />
   );
 }
 
@@ -91,7 +96,7 @@ export const router = createBrowserRouter([
   },
 
   {
-    path: PagePathEnum.login,
+    path: PagePath.login,
     element: <LoginPage />,
     errorElement: <p>no page</p>,
   },

@@ -12,6 +12,7 @@ export default {
         "dark-green": "#02735F",
         info: "#03a679",
         secondary: "#024059",
+        text: "#495057",
       },
       spacing: {
         drawer: "280px", // Adds a custom spacing size for width, height, margin, padding, etc.

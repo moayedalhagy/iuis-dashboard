@@ -5,9 +5,10 @@ import NavbarItem from "../components/NavbarItem";
 import { Link, useLocation } from "react-router-dom";
 
 import { useEffect, useState } from "react";
-import { PagePathEnum } from "../enums/PagePathEnum";
+import { PagePath } from "../PagePath";
 import {
   RiBookShelfLine,
+  RiEqualizerLine,
   RiGradienterLine,
   RiGraduationCapLine,
   RiHome4Line,
@@ -49,19 +50,19 @@ function links(isActiveState: string) {
   return (
     <div className="pt-3 mt-5 space-y-2">
       {/* Home  */}
-      <Link to={PagePathEnum.home}>
+      <Link to={PagePath.home}>
         <NavbarItem
           label="الرئيسية"
           leftSectionIcon={<RiHome4Line />}
-          isActive={isActiveState == PagePathEnum.home}
+          isActive={isActiveState == PagePath.home}
         />
       </Link>
       {/* Home  */}
-      <Link to={PagePathEnum.login}>
+      <Link to={PagePath.login}>
         <NavbarItem
           label="تسجيل الدخول"
           leftSectionIcon={<RiHome4Line />}
-          isActive={isActiveState == PagePathEnum.login}
+          isActive={isActiveState == PagePath.login}
         />
       </Link>
 
@@ -72,18 +73,18 @@ function links(isActiveState: string) {
         single={false}
         // opened={isActiveState}
       >
-        <Link to={PagePathEnum.news}>
+        <Link to={PagePath.news}>
           <NavbarItem
             label="إدارة الخبر"
             leftSectionIcon={<NavbarLinkCircle />}
-            isActive={isActiveState == PagePathEnum.news}
+            isActive={isActiveState == PagePath.news}
           />
         </Link>
-        <Link to={PagePathEnum.visuals}>
+        <Link to={PagePath.visuals}>
           <NavbarItem
             label="إدارة المرئيات"
             leftSectionIcon={<NavbarLinkCircle />}
-            isActive={isActiveState == PagePathEnum.visuals}
+            isActive={isActiveState == PagePath.visuals}
           />
         </Link>
       </NavbarItem>
@@ -95,45 +96,93 @@ function links(isActiveState: string) {
         single={false}
         // opened={isActiveState}
       >
-        <Link to={PagePathEnum.categoryProgram}>
+        <Link to={PagePath.categoryProgram}>
           <NavbarItem
             label="البرامج الاكاديمية"
             leftSectionIcon={<NavbarLinkCircle />}
-            isActive={isActiveState == PagePathEnum.categoryProgram}
+            isActive={isActiveState == PagePath.categoryProgram}
           />
         </Link>
-        <Link to={PagePathEnum.categoryNews}>
+        <Link to={PagePath.categoryNews}>
           <NavbarItem
             label="الأخبار"
             leftSectionIcon={<NavbarLinkCircle />}
-            isActive={isActiveState == PagePathEnum.categoryNews}
+            isActive={isActiveState == PagePath.categoryNews}
           />
         </Link>
-        <Link to={PagePathEnum.categoryDecisions}>
+        <Link to={PagePath.categoryDecisions}>
           <NavbarItem
             label="الأنظمة والقرارات"
             leftSectionIcon={<NavbarLinkCircle />}
-            isActive={isActiveState == PagePathEnum.categoryDecisions}
+            isActive={isActiveState == PagePath.categoryDecisions}
           />
         </Link>
       </NavbarItem>
 
       <Space mt="1" />
 
-      <Link to={PagePathEnum.academicProgram}>
+      <Link to={PagePath.academicProgram}>
         <NavbarItem
           label="البرامج الأكاديمية"
           leftSectionIcon={<RiGraduationCapLine />}
-          isActive={isActiveState == PagePathEnum.academicProgram}
+          isActive={isActiveState == PagePath.academicProgram}
         />
       </Link>
-      <Link to={PagePathEnum.decisions}>
+      <Link to={PagePath.decisions}>
         <NavbarItem
           label="الأنظمة والقرارات"
           leftSectionIcon={<RiNewspaperLine />}
-          isActive={isActiveState == PagePathEnum.decisions}
+          isActive={isActiveState == PagePath.decisions}
         />
       </Link>
+
+      <NavbarItem
+        label="الاعدادت العامة"
+        leftSectionIcon={<RiEqualizerLine />}
+        single={false}
+        // opened={isActiveState}
+      >
+        {/* teachers   */}
+        <Link to={PagePath.settings.pagesManger}>
+          <NavbarItem
+            label="إدارة الصفحات"
+            leftSectionIcon={<NavbarLinkCircle />}
+            isActive={isActiveState == PagePath.settings.pagesManger}
+          />
+        </Link>
+
+        <Link to={PagePath.settings.faqs}>
+          <NavbarItem
+            label="الأسئلة الشائعة"
+            leftSectionIcon={<NavbarLinkCircle />}
+            isActive={isActiveState == PagePath.settings.faqs}
+          />
+        </Link>
+
+        <Link to={PagePath.settings.socialMedia}>
+          <NavbarItem
+            label="منصات التواصل"
+            leftSectionIcon={<NavbarLinkCircle />}
+            isActive={isActiveState == PagePath.settings.socialMedia}
+          />
+        </Link>
+
+        <Link to={PagePath.settings.testimonials}>
+          <NavbarItem
+            label="قالوا عن الجامعة"
+            leftSectionIcon={<NavbarLinkCircle />}
+            isActive={isActiveState == PagePath.settings.testimonials}
+          />
+        </Link>
+
+        <Link to={PagePath.settings.onlinePortal}>
+          <NavbarItem
+            label="البوابة الإلكترونية"
+            leftSectionIcon={<NavbarLinkCircle />}
+            isActive={isActiveState == PagePath.settings.onlinePortal}
+          />
+        </Link>
+      </NavbarItem>
     </div>
   );
 }
