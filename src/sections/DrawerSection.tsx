@@ -28,7 +28,7 @@ export default function DrawerSection({ className }: any) {
     <div className={className}>
       <Drawer.Root opened onClose={() => {}} radius={"xs"} lockScroll={false}>
         <Drawer.Content>
-          <Drawer.Body className="bg-main-color h-screen text-white">
+          <Drawer.Body className="bg-main-color  min-h-screen text-white">
             {/* logo section  */}
             <div className=" py-2">
               <img src="/images/logo.svg" className="mx-auto" />
