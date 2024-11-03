@@ -236,3 +236,11 @@ export const FaqsFakeData = [
     status: false,
   },
 ];
+
+export const SoicalMediaFake = [
+  { name: "wa", link: "test", status: true, label: "واتساب" },
+  { name: "tg", link: "test", status: true, label: "تيليجرام" },
+  { name: "fb", link: "test", status: true, label: "فيسبوك" },
+  { name: "it", link: "test", status: true, label: "انستجرام" },
+  { name: "tw", link: "test", status: true, label: "تويتر" },
+];
