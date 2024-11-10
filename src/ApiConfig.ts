@@ -1,5 +1,7 @@
 import axios, { InternalAxiosRequestConfig } from "axios";
 import CustomAxiosRequestConfig from "./types/interfaces/CustomAxiosRequestConfig";
+import { API_TOKEN_KEY } from "./store/AuthStore";
+import { NoTokenError } from "./errors/NoTokenError";
 
 const apiHandler = axios.create({
   baseURL: "https://api.iuis.university/api",
@@ -16,10 +18,10 @@ const configInterceptor = (config: InternalAxiosRequestConfig): any => {
   const isAuthRequired = customConfig.authRequired !== false;
 
   if (isAuthRequired) {
-    const token = localStorage.getItem("token");
+    const token = localStorage.getItem(API_TOKEN_KEY);
 
     if (!token) {
-      return Promise.reject(new Error("Authentication token is missing."));
+      return Promise.reject(new NoTokenError());
     }
 
     // Add the token to the headers

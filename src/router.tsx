@@ -89,6 +89,7 @@ function CheckApiTokenLocalStorage() {
 function AuthRoute({ children }: PropsWithChildren) {
   const authStore = useAuthStore();
 
+  //run every 3 seconds
   CheckApiTokenLocalStorage();
 
   return authStore.isAuthenticated ? (
