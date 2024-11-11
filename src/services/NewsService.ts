@@ -4,6 +4,7 @@ import { QueryKeyEnum } from "../enums/QueryKeyEnum";
 
 import useAuthStore from "../store/AuthStore";
 import ErrorHandler from "../ErrorHandler";
+import { NewsCardApiType } from "../types/NewsCardTypes";
 
 export function useNewsService() {
   const auth = useAuthStore();
@@ -17,16 +18,13 @@ export function useNewsService() {
     ErrorHandler(query.error);
   }
 
-  let typedData = undefined;
-  if (query.data?.success) {
-    typedData = query.data.data;
-  }
-
   return {
     isLoading: query.isLoading,
     isError: query.isError,
     isStale: query.isStale,
     data: query.data,
-    typedData: typedData,
+    typedData: query.data?.success
+      ? (query.data.data as Array<NewsCardApiType>)
+      : null,
   };
 }

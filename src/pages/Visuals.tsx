@@ -35,8 +35,8 @@ export default function Visuals() {
       />
       {/* page content  */}
       <section className="bg-white rounded my-2 px-2 pt-8 flex flex-col gap-y-2">
-        {[1, 2, 3, 4, 5].map(() => (
-          <div className="odd:bg-[#f8f9fa] even:bg-white  p-3">
+        {[1, 2, 3, 4, 5].map((item: number) => (
+          <div className="odd:bg-[#f8f9fa] even:bg-white  p-3" key={item}>
             <VisualsItem
               link={fakeImage}
               title="د . أحمد النداف رئيس الجامعة الإسلامية التعريف بالجامعة "

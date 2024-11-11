@@ -7,6 +7,7 @@ export default function NewsCard({
   title,
   description,
   cardImageLink,
+  views,
 }: NewsCardElementType) {
   return (
     <Card shadow="md" padding="lg" radius="md" withBorder className="max-w-xs ">
@@ -32,6 +33,10 @@ export default function NewsCard({
         </Text>
 
         <DateCardComponent date="2023-02-02" />
+        {/* description  */}
+        <Text size="sm" c="dimmed">
+          {views}
+        </Text>
       </Group>
 
       <Divider />
