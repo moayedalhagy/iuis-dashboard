@@ -12,10 +12,12 @@ import { useDisclosure } from "@mantine/hooks";
 import Loading from "../components/Loading";
 
 export default function News() {
-  const newsService = useNewsService().get();
+  const newsService = useNewsService();
+  const getNews = newsService.get();
+
   const [opened, { open, close }] = useDisclosure(false);
 
-  if (newsService.isLoading) {
+  if (getNews.isLoading) {
     return <Loading />;
   }
   const filterOne = <FilterComponent label="عـام" data={["2023", "2024"]} />;
@@ -23,7 +25,7 @@ export default function News() {
     <FilterComponent label="التصنيف" data={["عام", "قرارات"]} />
   );
 
-  if (!newsService.typedData) {
+  if (!getNews.typedData) {
     return;
   }
 
@@ -44,7 +46,7 @@ export default function News() {
       />
       {/* page content  */}
       <section className="my-2 pt-3 flex flex-row flex-wrap justify-around gap-5 ">
-        {newsService.typedData.map((item) => (
+        {getNews.typedData.map((item) => (
           <div className=" " key={item.newsId}>
             <NewsCard
               title={item.title}
@@ -52,6 +54,7 @@ export default function News() {
               cardImageLink={item.cardImageLink}
               newsId={item.newsId}
               views={item.views}
+              deleteItem={() => newsService.delete(item.newsId)}
             />
           </div>
         ))}

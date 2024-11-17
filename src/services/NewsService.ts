@@ -53,22 +53,23 @@ export function useNewsService() {
   //   },
   // });
 
-  // // استعلام الحذف (delete)
-  // const remove = useMutation({
-  //   mutationFn: deleteNews, // دالة الحذف في API
-  //   onSuccess: () => {
-  //     queryClient.invalidateQueries([QueryKeyEnum.news]); // إعادة تحديث الأخبار
-  //   },
-  //   onError: (error) => {
-  //     ErrorHandler(error);
-  //   },
-  // });
+  // استعلام الحذف (delete)
+  const remove = useMutation({
+    mutationFn: deleteNews, // دالة الحذف في API
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: [QueryKeyEnum.news] }); // إعادة تحديث الأخبار
+    },
+    onError: (error) => {
+      ErrorHandler(error);
+      console.log(error);
+    },
+  });
 
   return {
     get, // استخدام البيانات (قراءة)
     create: (data: NewsCardApiType) => create.mutate(data), // إنشاء خبر جديد
     // update: (id: string, data: Partial<NewsCardApiType>) =>
     //   update.mutate({ id, ...data }), // تحديث خبر
-    // delete: (id: string) => remove.mutate(id), // حذف خبر
+    delete: (id: number) => remove.mutate(id), // حذف خبر
   };
 }

@@ -2,13 +2,15 @@ import { Card, Image, Text, Button, Group, Divider } from "@mantine/core";
 import { NewsCardElementType } from "../types/NewsCardTypes";
 import DateCardComponent from "./DateCardComponent";
 import { RiDeleteBin7Line, RiEdit2Line, RiEyeLine } from "@remixicon/react";
+import ConfirmDelete from "./ConfirmDelete";
 
 export default function NewsCard({
   title,
   description,
   cardImageLink,
   views,
-}: NewsCardElementType) {
+  deleteItem,
+}: NewsCardElementType & { deleteItem: () => void }) {
   return (
     <Card shadow="md" padding="lg" radius="md" withBorder className="max-w-xs ">
       <Card.Section>
@@ -46,9 +48,9 @@ export default function NewsCard({
         <Button variant="outline" mt="md" radius="md" color="green" size="xs">
           <RiEdit2Line />
         </Button>
-        <Button variant="outline" mt="md" radius="md" color="red" size="xs">
-          <RiDeleteBin7Line />
-        </Button>
+
+        <ConfirmDelete onConfirm={deleteItem} onCancel={() => null} />
+
         <Button variant="outline" mt="md" radius="md" color="black" size="xs">
           <RiEyeLine />
         </Button>

@@ -3,10 +3,12 @@ import apiHandler from "../ApiConfig";
 
 import { config } from "../types/interfaces/CustomAxiosRequestConfig";
 
+const endpoint = "/CardsNews";
+
 export async function getNews() {
   config.authRequired = true;
 
-  const response = await apiHandler.get("/CardsNews", config);
+  const response = await apiHandler.get(`${endpoint}`, config);
 
   return response.data;
 }
@@ -25,10 +27,16 @@ export async function createNews(data: any) {
     newsLink: "string",
     views: 0,
   };
-  const response = await apiHandler.post("/CardsNews", datax);
+  const response = await apiHandler.post(`${endpoint}`, datax);
   return response;
 }
 
 export async function updateNews() {}
 
-export async function deleteNews() {}
+export async function deleteNews(id: number) {
+  config.authRequired = true;
+
+  const response = await apiHandler.delete(`${endpoint}/${id}`, config);
+
+  return response.data;
+}
