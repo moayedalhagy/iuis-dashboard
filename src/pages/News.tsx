@@ -12,7 +12,7 @@ import { useDisclosure } from "@mantine/hooks";
 import Loading from "../components/Loading";
 
 export default function News() {
-  const newsService = useNewsService();
+  const newsService = useNewsService().get();
   const [opened, { open, close }] = useDisclosure(false);
 
   if (newsService.isLoading) {

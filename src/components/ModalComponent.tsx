@@ -9,9 +9,15 @@ type ParamType = {
   modal: ModalParamType;
   title: string;
   children: React.ReactNode;
+  handleClick: (e: any) => void;
 };
 
-export default function ModalComponent({ modal, title, children }: ParamType) {
+export default function ModalComponent({
+  modal,
+  title,
+  children,
+  handleClick,
+}: ParamType) {
   return (
     <>
       {" "}
@@ -37,6 +43,7 @@ export default function ModalComponent({ modal, title, children }: ParamType) {
               root: "bg-info w-32",
             }}
             size="sm"
+            onClick={handleClick}
           >
             حفظ
           </Button>

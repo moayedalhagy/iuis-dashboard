@@ -5,8 +5,9 @@ import { useState } from "react";
 
 type ParamType = {
   required?: boolean;
+  onChange: (url: string) => void;
 };
-export default function VideoInput({ required }: ParamType) {
+export default function VideoInput({ required, onChange }: ParamType) {
   const [previewOk, setPreviewOk] = useState("");
   return (
     <div>
@@ -17,7 +18,11 @@ export default function VideoInput({ required }: ParamType) {
         error=""
         value={previewOk}
         onChange={(event) => {
-          setPreviewOk(urlHandler(event.target.value));
+          let url = urlHandler(event.target.value);
+
+          setPreviewOk(url);
+
+          onChange(url);
         }}
         dir="ltr"
       />
