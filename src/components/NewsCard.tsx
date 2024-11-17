@@ -49,7 +49,17 @@ export default function NewsCard({
           <RiEdit2Line />
         </Button>
 
-        <ConfirmDelete onConfirm={deleteItem} onCancel={() => null} />
+        <ConfirmDelete
+          onConfirm={deleteItem}
+          onCancel={() => null}
+          style={{
+            variant: "outline",
+            mt: "md",
+            radius: "md",
+            color: "red",
+            size: "xs",
+          }}
+        />
 
         <Button variant="outline" mt="md" radius="md" color="black" size="xs">
           <RiEyeLine />

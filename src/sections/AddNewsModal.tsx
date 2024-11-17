@@ -1,8 +1,8 @@
 import ModalComponent from "../components/ModalComponent";
 import { useForm, SubmitHandler } from "react-hook-form";
 
-import { RichTextEditor, useRichTextEditorContext } from "@mantine/tiptap";
-import { DevTool } from "@hookform/devtools";
+import { RichTextEditor } from "@mantine/tiptap";
+
 import { useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 
@@ -64,7 +64,7 @@ export default function AddNewsModal({ modal }: ParamType) {
     register,
     handleSubmit,
     setValue,
-    control,
+
     formState: { errors },
   } = useForm<Inputs>();
 

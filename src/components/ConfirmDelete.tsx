@@ -9,11 +9,13 @@ interface ConfirmDeleteProps {
   onCancel?: () => void; // دالة تُنفذ عند الإلغاء (اختيارية)
   title?: string; // عنوان النافذة (اختياري)
   message?: string; // رسالة التأكيد (اختياري)
+  style: any;
 }
 
 const ConfirmDelete: React.FC<ConfirmDeleteProps> = ({
   onConfirm,
   onCancel,
+  style,
 }) => {
   const [opened, { open, close }] = useDisclosure(false);
 
@@ -33,11 +35,11 @@ const ConfirmDelete: React.FC<ConfirmDeleteProps> = ({
 
       <Button
         onClick={open}
-        variant="outline"
-        mt="md"
-        radius="md"
-        color="red"
-        size="xs"
+        variant={style.variant}
+        mt={style.mt}
+        radius={style.radius}
+        color={style.color}
+        size={style.size}
       >
         <RiDeleteBin7Line />
       </Button>

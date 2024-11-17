@@ -1,18 +1,32 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { getNews, createNews, deleteNews } from "../api/ApiNews";
+import {
+  apiGet,
+  apiCreate,
+  apiDelete,
+  // apiUpdate,
+} from "../api/ApiNewsCategory";
 import { QueryKeyEnum } from "../enums/QueryKeyEnum";
 import ErrorHandler from "../ErrorHandler";
-import { NewsCardApiType } from "../types/NewsCardTypes";
 
-export function useNewsService() {
+import { NewsCategoryType } from "../types/CategoryType";
+import NotificationSuccess from "../components/NotificationSuccess";
+
+const notify = (title: string, message: string) => {
+  const audio = new Audio("/success.mp3"); // ضع مسار ملف الصوت هنا
+  audio.play().catch((err) => console.error("Error playing sound:", err));
+  NotificationSuccess({
+    title: title,
+    message: message,
+  });
+};
+export function useNewsCategoriesService() {
   const queryClient = useQueryClient();
 
   // استعلام القراءة (get)
-  //uppler letter for eslint requirments
   const Get = () => {
     const query = useQuery({
-      queryKey: [QueryKeyEnum.news],
-      queryFn: getNews,
+      queryKey: [QueryKeyEnum.news_categories],
+      queryFn: apiGet,
     });
 
     if (query.isError) {
@@ -25,16 +39,20 @@ export function useNewsService() {
       isStale: query.isStale,
       data: query.data,
       typedData: query.data?.success
-        ? (query.data.data as Array<NewsCardApiType>)
+        ? (query.data.data as Array<NewsCategoryType>)
         : null,
     };
   };
 
   // استعلام الإنشاء (create)
   const create = useMutation({
-    mutationFn: createNews, // دالة الإنشاء في API
+    mutationFn: apiCreate, // دالة الإنشاء في API
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: [QueryKeyEnum.news] }); // إعادة تحديث الأخبار
+      queryClient.invalidateQueries({
+        queryKey: [QueryKeyEnum.news_categories],
+      }); // إعادة تحديث الأخبار
+
+      notify("رسالة نجاح", `تم اضافة البيانات بنجاح`);
     },
 
     onError: (error) => {
@@ -56,9 +74,13 @@ export function useNewsService() {
 
   // استعلام الحذف (delete)
   const remove = useMutation({
-    mutationFn: deleteNews, // دالة الحذف في API
+    mutationFn: apiDelete, // دالة الحذف في API
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: [QueryKeyEnum.news] }); // إعادة تحديث الأخبار
+      queryClient.invalidateQueries({
+        queryKey: [QueryKeyEnum.news_categories],
+      }); // إعادة تحديث الأخبار
+
+      notify("رسالة نجاح", `تم حذف البيانات بنجاح`);
     },
     onError: (error) => {
       ErrorHandler(error);
@@ -68,7 +90,7 @@ export function useNewsService() {
 
   return {
     Get, // استخدام البيانات (قراءة)
-    create: (data: NewsCardApiType) => create.mutate(data), // إنشاء خبر جديد
+    create: (data: NewsCategoryType) => create.mutate(data), // إنشاء خبر جديد
     // update: (id: string, data: Partial<NewsCardApiType>) =>
     //   update.mutate({ id, ...data }), // تحديث خبر
     delete: (id: number) => remove.mutate(id), // حذف خبر

@@ -13,7 +13,7 @@ import Loading from "../components/Loading";
 
 export default function News() {
   const newsService = useNewsService();
-  const getNews = newsService.get();
+  const getNews = newsService.Get();
 
   const [opened, { open, close }] = useDisclosure(false);
 
