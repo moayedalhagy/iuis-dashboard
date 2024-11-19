@@ -2,7 +2,7 @@ import apiHandler from "../ApiConfig";
 
 import { config } from "../types/interfaces/CustomAxiosRequestConfig";
 
-const endpoint = "/NewsCategoriesNames";
+const endpoint = "/DecisionsTypes";
 
 export async function apiGet() {
   config.authRequired = true;

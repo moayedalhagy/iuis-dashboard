@@ -16,8 +16,8 @@ type ParamType = {
   modal: ModalParamType;
 };
 
-export default function AddCategoryModal({ modal }: ParamType) {
-  const newsCategoriesService = useNewsCategoriesService();
+export default function AddNewsCategoryModal({ modal }: ParamType) {
+  const service = useNewsCategoriesService();
 
   const {
     register,
@@ -29,7 +29,7 @@ export default function AddCategoryModal({ modal }: ParamType) {
   const onSubmit: SubmitHandler<NewsCategoryType> = (
     data: NewsCategoryType
   ) => {
-    newsCategoriesService.create(data);
+    service.create(data);
     // setValue("newsCategoryName", "");
   };
 

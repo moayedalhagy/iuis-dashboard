@@ -48,7 +48,7 @@ export default function MainPageItem() {
 
       <div className="mt-3 flex gap-x-2">
         <div className="flex-1">
-          <VideoInput required />
+          <VideoInput required onChange={() => null} />
         </div>
         <Button
           variant="outline"

@@ -1,9 +1,8 @@
 import { useDisclosure } from "@mantine/hooks";
 import { Table, Group, Button } from "@mantine/core";
-import { RiDeleteBin7Line, RiEdit2Line } from "@remixicon/react";
+import { RiEdit2Line } from "@remixicon/react";
 
-//section
-import AddCategoryModal from "../sections/AddCategoryModal";
+
 //components
 import Loading from "../components/Loading";
 import ControlLayout from "../components/ControlLayout/ControlLayout";
@@ -13,6 +12,7 @@ import { useNewsCategoriesService } from "../services/NewsCategoriesService";
 //types
 import { NewsCategoryType } from "../types/CategoryType";
 import ConfirmDelete from "../components/ConfirmDelete";
+import AddNewsCategoryModal from "../sections/AddNewsCategoryModal";
 
 export default function CategoryNews() {
   //hooks
@@ -25,7 +25,7 @@ export default function CategoryNews() {
     <Loading />
   ) : (
     <div className="p-5">
-      <AddCategoryModal
+      <AddNewsCategoryModal
         modal={{
           opened: opened,
           onOpen: open,
@@ -66,6 +66,7 @@ export default function CategoryNews() {
                     </Button>
 
                     <ConfirmDelete
+                      className="h-[30px] w-[30px]   p-2"
                       onConfirm={() =>
                         newsCategoriesService.delete(element.newsCategoryId)
                       }
@@ -76,7 +77,7 @@ export default function CategoryNews() {
                         radius: "md",
                         color: "red",
                         size: "xs",
-                        className: "h-[30px] w-[30px]   p-2",
+
                       }}
                     />
                   </Group>

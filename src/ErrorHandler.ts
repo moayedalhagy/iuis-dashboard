@@ -9,8 +9,9 @@ export default function ErrorHandler(error: Error) {
   }
 
   NotificationError({
-    title: "Error",
-    message: `welcome ${error.message}`,
+    title: "خــطــا",
+    // message: `welcome ${error.message}`,
+    message: `خطا غير متوقع`,
   });
   const audio = new Audio("/error2.mp3"); // ضع مسار ملف الصوت هنا
   audio.play().catch((err) => console.error("Error playing sound:", err));

@@ -1,4 +1,3 @@
-import axios from "axios";
 import apiHandler from "../ApiConfig";
 
 import { config } from "../types/interfaces/CustomAxiosRequestConfig";
@@ -15,7 +14,7 @@ export async function getNews() {
 
 export async function createNews(data: any) {
   config.authRequired = true;
-
+  data;
   const datax = {
     newsCategoryId: 1,
     cardImageLink: "string",

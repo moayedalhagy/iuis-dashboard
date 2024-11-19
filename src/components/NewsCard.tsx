@@ -1,7 +1,7 @@
 import { Card, Image, Text, Button, Group, Divider } from "@mantine/core";
 import { NewsCardElementType } from "../types/NewsCardTypes";
 import DateCardComponent from "./DateCardComponent";
-import { RiDeleteBin7Line, RiEdit2Line, RiEyeLine } from "@remixicon/react";
+import { RiEdit2Line, RiEyeLine } from "@remixicon/react";
 import ConfirmDelete from "./ConfirmDelete";
 
 export default function NewsCard({
@@ -50,6 +50,7 @@ export default function NewsCard({
         </Button>
 
         <ConfirmDelete
+          className="h-[30px] w-[30px]   p-2"
           onConfirm={deleteItem}
           onCancel={() => null}
           style={{

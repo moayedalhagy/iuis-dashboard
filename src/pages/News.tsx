@@ -5,7 +5,7 @@ import ControlLayoutButton from "../components/ControlLayout/ControlLayoutButton
 
 import FilterComponent from "../components/FilterComponent";
 import SearchComponent from "../components/SearchComponent";
-import { fakeCardNews } from "../fake";
+
 import AddNewsModal from "../sections/AddNewsModal";
 
 import { useDisclosure } from "@mantine/hooks";

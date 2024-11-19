@@ -29,6 +29,7 @@ export default function AddFaqModal({ modal }: ParamType) {
         onClose: modal.onClose,
       }}
       title="اضافة سؤال"
+      handleClick={() => null}
     >
       <section className="form space-y-3 ">
         {/* program name */}

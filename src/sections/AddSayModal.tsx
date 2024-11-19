@@ -37,6 +37,7 @@ export default function AddSayModal({ modal }: ParamType) {
         onClose: modal.onClose,
       }}
       title="اضافة قول عن الجامعة"
+      handleClick={() => null}
     >
       <section className="form space-y-3 ">
         {/* news title */}

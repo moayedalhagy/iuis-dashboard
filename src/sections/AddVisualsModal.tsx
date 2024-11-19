@@ -25,6 +25,7 @@ export default function AddVisualsModal({ modal }: ParamType) {
         onClose: modal.onClose,
       }}
       title="اضافة فيديو"
+      handleClick={() => null}
     >
       <section className="form space-y-3 ">
         {/* news mini description */}
@@ -67,7 +68,7 @@ export default function AddVisualsModal({ modal }: ParamType) {
           )}
         </div>
       </section>
-    </ModalComponent>
+    </ModalComponent >
   );
 }
 

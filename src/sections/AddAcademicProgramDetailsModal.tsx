@@ -23,7 +23,7 @@ type ParamType = {
 export default function AddAcademicProgramDetailsModal({
   modal,
 }: // detailsData,
-ParamType) {
+  ParamType) {
   const editor = useEditor({
     extensions: [StarterKit],
     content:
@@ -38,13 +38,14 @@ ParamType) {
         onClose: modal.onClose,
       }}
       title="اضافة تفاصيل برنامج"
+      handleClick={() => null}
     >
       <section className="p-3 space-y-3 ">
         {/* program name */}
 
         <ControlLayoutButton
           label="إضافة فقرة تعريفية "
-          clickHandler={() => {}}
+          clickHandler={() => { }}
         />
         <div className="flex flex-col gap-y-5">
           <TextBox editor={editor} />

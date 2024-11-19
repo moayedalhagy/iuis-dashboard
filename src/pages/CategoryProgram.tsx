@@ -9,7 +9,7 @@ import { useDisclosure } from "@mantine/hooks";
 
 import { Table, Group, Button } from "@mantine/core";
 import { RiDeleteBin7Line, RiEdit2Line } from "@remixicon/react";
-import AddCategoryModal from "../sections/AddCategoryModal";
+import AddCategoryModal from "../sections/AddNewsCategoryModal";
 
 export default function CategoryProgram() {
   //   const newsService = useNewsService();

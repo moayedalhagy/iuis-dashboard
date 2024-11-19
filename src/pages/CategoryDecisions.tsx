@@ -1,6 +1,6 @@
 import ControlLayout from "../components/ControlLayout/ControlLayout";
 
-// import { useNewsService } from "../services/NewsService";
+
 import ControlLayoutButton from "../components/ControlLayout/ControlLayoutButton";
 
 import SearchComponent from "../components/SearchComponent";
@@ -8,35 +8,52 @@ import SearchComponent from "../components/SearchComponent";
 import { useDisclosure } from "@mantine/hooks";
 
 import { Table, Group, Button } from "@mantine/core";
-import { RiDeleteBin7Line, RiEdit2Line } from "@remixicon/react";
-import AddCategoryModal from "../sections/AddCategoryModal";
+import { RiEdit2Line } from "@remixicon/react";
+import { useDecisionsCategoriesService } from "../services/DecisionsCategoriesService";
+import Loading from "../components/Loading";
+import ConfirmDelete from "../components/ConfirmDelete";
+import AddDecisionsCategoryModal from "../sections/AddDecisionsCategoryModal";
+import { useState } from "react";
+import { DecisionsCategoryType } from "../types/CategoryType";
 
 export default function CategoryDecisions() {
-  //   const newsService = useNewsService();
 
-  //   if (newsService.isLoading) return <p>loading...</p>;
-
-  const elements = [
-    { id: 1, name: "برامج الدبلوم" },
-    { id: 2, name: "برامج البكالوريوس" },
-    { id: 3, name: "برامج الماجستير" },
-    { id: 4, name: "برامج أخرى" },
-  ];
-
+  const decisionsCategoriesService = useDecisionsCategoriesService();
+  const getData = decisionsCategoriesService.Get();
   const [opened, { open, close }] = useDisclosure(false);
-  return (
+  const [selectedItem, setSelectedItem] =
+    useState<DecisionsCategoryType | null>();
+
+  const handleEdit = (item: DecisionsCategoryType) => {
+    setSelectedItem(item);
+    open();
+  };
+
+  return getData.isLoading ? (
+    <Loading />
+  ) : (
     <div className="p-5">
-      <AddCategoryModal
+      <AddDecisionsCategoryModal
         modal={{
           opened: opened,
           onOpen: open,
           onClose: close,
         }}
+        selectedItem={selectedItem}
       />
 
       {/* Control Elements  */}
       <ControlLayout
-        button={<ControlLayoutButton label="إضافة تصنيف" clickHandler={open} />}
+        button={
+          <ControlLayoutButton
+            label="إضافة تصنيف"
+            clickHandler={() => {
+              setSelectedItem(null);
+              open();
+            }}
+
+          />
+        }
         search={<SearchComponent />}
       />
       {/* page content  */}
@@ -50,10 +67,10 @@ export default function CategoryDecisions() {
             </Table.Tr>
           </Table.Thead>
           <Table.Tbody>
-            {elements.map((element) => (
-              <Table.Tr key={element.name}>
-                <Table.Td>{element.id}</Table.Td>
-                <Table.Td>{element.name}</Table.Td>
+            {getData.typedData?.map((element) => (
+              <Table.Tr key={element.decisionTypeId}>
+                <Table.Td>{element.decisionTypeId}</Table.Td>
+                <Table.Td>{element.decisionTypeName}</Table.Td>
                 <Table.Td>
                   <Group justify="center">
                     <Button
@@ -62,18 +79,24 @@ export default function CategoryDecisions() {
                       radius="md"
                       color="green"
                       className="h-[30px] w-[30px]   p-2"
+                      onClick={() => handleEdit(element)}
                     >
                       <RiEdit2Line />
                     </Button>
-                    <Button
-                      variant="outline"
-                      mt="md"
-                      radius="md"
-                      color="red"
+                    <ConfirmDelete
+                      onConfirm={() => decisionsCategoriesService.delete(element.decisionTypeId)}
+                      onCancel={() => null}
                       className="h-[30px] w-[30px]   p-2"
-                    >
-                      <RiDeleteBin7Line />
-                    </Button>
+
+                      style={{
+                        variant: "outline",
+                        mt: "md",
+                        radius: "md",
+                        color: "red",
+                        size: "xs",
+                      }}
+
+                    />
                   </Group>
                 </Table.Td>
               </Table.Tr>

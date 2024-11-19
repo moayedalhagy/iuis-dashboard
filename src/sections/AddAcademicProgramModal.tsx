@@ -23,6 +23,7 @@ export default function AddAcademicProgramModal({ modal }: ParamType) {
         onClose: modal.onClose,
       }}
       title="اضافة برنامج"
+      handleClick={() => null}
     >
       <section className="form space-y-3 ">
         {/* program name */}
@@ -36,7 +37,7 @@ export default function AddAcademicProgramModal({ modal }: ParamType) {
           placeholder="اختر صنف"
           data={[]}
           comboboxProps={{ withinPortal: false }}
-          onChange={() => {}}
+          onChange={() => { }}
           checkIconPosition={"right"}
           clearable
         />

@@ -68,7 +68,7 @@ export default function AddNewsModal({ modal }: ParamType) {
     formState: { errors },
   } = useForm<Inputs>();
 
-  const onSubmit: SubmitHandler<Inputs> = (data: NewsCardApiType) => {
+  const onSubmit: SubmitHandler<any> = (data: NewsCardApiType) => {
     service.create(data);
   };
 
@@ -82,7 +82,7 @@ export default function AddNewsModal({ modal }: ParamType) {
     setValue("images", e);
   };
   const removeLinkedImage = (index: number) => {
-    setLinkedImages([...linkedImages.filter((e, idx) => idx != index)]);
+    setLinkedImages([...linkedImages.filter((_, idx) => idx != index)]);
   };
 
   const handleKeywords = (e: Array<string>) => {
