@@ -97,8 +97,6 @@ export function useDecisionsCategoriesService() {
     Get, // استخدام البيانات (قراءة)
     create: (data: DecisionsCategoryType) => create.mutate(data), // إنشاء خبر جديد
     update, // تحديث خبر
-    // update: (id: number, data: DecisionsCategoryType) =>
-    //   update.mutate({ id, data }), // تحديث خبر
     delete: (id: number) => remove.mutate(id), // حذف خبر
   };
 }

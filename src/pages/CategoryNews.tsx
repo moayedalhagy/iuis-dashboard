@@ -13,11 +13,19 @@ import { useNewsCategoriesService } from "../services/NewsCategoriesService";
 import { NewsCategoryType } from "../types/CategoryType";
 import ConfirmDelete from "../components/ConfirmDelete";
 import AddNewsCategoryModal from "../sections/AddNewsCategoryModal";
+import { useState } from "react";
 
 export default function CategoryNews() {
   //hooks
   const newsCategoriesService = useNewsCategoriesService();
   const [opened, { open, close }] = useDisclosure(false);
+  const [selectedItem, setSelectedItem] =
+    useState<NewsCategoryType | null>();
+
+  const handleEdit = (item: NewsCategoryType) => {
+    setSelectedItem(item);
+    open();
+  };
 
   const { typedData, isLoading } = newsCategoriesService.Get();
 
@@ -31,11 +39,17 @@ export default function CategoryNews() {
           onOpen: open,
           onClose: close,
         }}
+        selectedItem={selectedItem}
       />
 
       {/* Control Elements  */}
       <ControlLayout
-        button={<ControlLayoutButton label="إضافة تصنيف" clickHandler={open} />}
+        button={<ControlLayoutButton label="إضافة تصنيف"
+
+          clickHandler={() => {
+            setSelectedItem(null);
+            open();
+          }} />}
         search={<SearchComponent />}
       />
       {/* page content  */}
@@ -61,6 +75,7 @@ export default function CategoryNews() {
                       radius="md"
                       color="green"
                       className="h-[30px] w-[30px] p-2"
+                      onClick={() => handleEdit(element)}
                     >
                       <RiEdit2Line />
                     </Button>

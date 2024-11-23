@@ -25,6 +25,7 @@ export default function AddDecisionsCategoryModal({
 }: ParamType) {
   const service = useDecisionsCategoriesService();
   const update = service.update;
+
   const {
     register,
     handleSubmit,
@@ -42,13 +43,11 @@ export default function AddDecisionsCategoryModal({
     data: DecisionsCategoryType
   ) => {
     if (selectedItem) {
-      // console.log(selectedItem.decisionTypeId, data);
+
       update.mutate({ id: selectedItem.decisionTypeId, data });
     } else {
       service.create(data);
     }
-
-
     reset({
       decisionTypeName: "",
     })
@@ -60,9 +59,6 @@ export default function AddDecisionsCategoryModal({
     setValue("decisionTypeName", selectedItem?.decisionTypeName || ""); // Set initial value for decisionTypeName
   }, [selectedItem, setValue]);
 
-  useEffect(() => {
-    update.isPending ? console.log("error") : null;
-  }, [update.isPending]);
 
 
   return (
@@ -74,7 +70,6 @@ export default function AddDecisionsCategoryModal({
       }}
       handleClick={handleSubmit(onSubmit)}
       title="اضافة تصنيف"
-
     >
       <section className="form space-y-3 ">
         {/* news mini description */}

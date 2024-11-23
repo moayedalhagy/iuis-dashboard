@@ -3,13 +3,17 @@ import {
   apiGet,
   apiCreate,
   apiDelete,
-  // apiUpdate,
+  apiUpdate,
 } from "../api/ApiNewsCategory";
 import { QueryKeyEnum } from "../enums/QueryKeyEnum";
 import ErrorHandler from "../ErrorHandler";
 
 import { NewsCategoryType } from "../types/CategoryType";
 import NotificationSuccess from "../components/NotificationSuccess";
+
+import apiHandler from "../ApiConfig";
+
+const endpoint = "/NewsCategoriesNames";
 
 const notify = (title: string, message: string) => {
   const audio = new Audio("/success.mp3"); // ضع مسار ملف الصوت هنا
@@ -26,7 +30,7 @@ export function useNewsCategoriesService() {
   const Get = () => {
     const query = useQuery({
       queryKey: [QueryKeyEnum.newsCategories],
-      queryFn: apiGet,
+      queryFn: () => apiHandler.get(`${endpoint}`),
     });
 
     if (query.isError) {
@@ -38,15 +42,16 @@ export function useNewsCategoriesService() {
       isError: query.isError,
       isStale: query.isStale,
       data: query.data,
-      typedData: query.data?.success
-        ? (query.data.data as Array<NewsCategoryType>)
+      typedData: query.data?.data.success
+        ? (query.data.data.data as Array<NewsCategoryType>)
         : null,
     };
   };
 
   // استعلام الإنشاء (create)
   const create = useMutation({
-    mutationFn: apiCreate, // دالة الإنشاء في API
+    mutationKey: [QueryKeyEnum.newsCategories],
+    mutationFn: (data: any) => apiHandler.post(`${endpoint}`, data), // دالة الإنشاء في API
     onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: [QueryKeyEnum.newsCategories],
@@ -55,22 +60,22 @@ export function useNewsCategoriesService() {
       notify("رسالة نجاح", `تم اضافة البيانات بنجاح`);
     },
 
-    onError: (error) => {
-      throw error;
-      ErrorHandler(error);
-    },
+    onError: ErrorHandler,
   });
 
-  // // استعلام التحديث (update)
-  // const update = useMutation({
-  //   mutationFn: updateNews, // دالة التحديث في API
-  //   onSuccess: () => {
-  //     queryClient.invalidateQueries([QueryKeyEnum.news]); // إعادة تحديث الأخبار
-  //   },
-  //   onError: (error) => {
-  //     ErrorHandler(error);
-  //   },
-  // });
+  // استعلام التحديث (update)
+  // apiUpdate
+  const update = useMutation({
+    mutationKey: [QueryKeyEnum.newsCategories],
+    mutationFn: ({ id, data }: any) => apiUpdate(id, data), // دالة التحديث في API
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: [QueryKeyEnum.newsCategories],
+      });
+      notify("رسالة نجاح", `تم اضافة البيانات بنجاح`);
+    },
+    onError: ErrorHandler,
+  });
 
   // استعلام الحذف (delete)
   const remove = useMutation({
@@ -82,17 +87,13 @@ export function useNewsCategoriesService() {
 
       notify("رسالة نجاح", `تم حذف البيانات بنجاح`);
     },
-    onError: (error) => {
-      ErrorHandler(error);
-      console.log(error);
-    },
+    onError: ErrorHandler,
   });
 
   return {
     Get, // استخدام البيانات (قراءة)
     create: (data: NewsCategoryType) => create.mutate(data), // إنشاء خبر جديد
-    // update: (id: string, data: Partial<NewsCardApiType>) =>
-    //   update.mutate({ id, ...data }), // تحديث خبر
+    update,
     delete: (id: number) => remove.mutate(id), // حذف خبر
   };
 }

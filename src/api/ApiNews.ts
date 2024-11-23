@@ -30,7 +30,12 @@ export async function createNews(data: any) {
   return response;
 }
 
-export async function updateNews() {}
+export async function apiUpdate(id: number, data: any) {
+  config.authRequired = true;
+
+  const response = await apiHandler.put(`${endpoint}/${id}`, data);
+  return response;
+}
 
 export async function deleteNews(id: number) {
   config.authRequired = true;

@@ -4,32 +4,13 @@ import { config } from "../types/interfaces/CustomAxiosRequestConfig";
 
 const endpoint = "/NewsCategoriesNames";
 
-export async function apiGet() {
-  config.authRequired = true;
+export const apiGet = async () => await apiHandler.get(`${endpoint}`, config);
 
-  const response = await apiHandler.get(`${endpoint}`, config);
+export const apiCreate = async (data: any) =>
+  await apiHandler.post(`${endpoint}`, data);
 
-  return response.data;
-}
+export const apiUpdate = async (id: number, data: any) =>
+  await apiHandler.put(`${endpoint}/${id}`, data);
 
-export async function apiCreate(data: any) {
-  config.authRequired = true;
-
-  const response = await apiHandler.post(`${endpoint}`, data);
-  return response;
-}
-
-export async function apiUpdate(id: number, data: any) {
-  config.authRequired = true;
-
-  const response = await apiHandler.put(`${endpoint}/${id}`, data);
-  return response;
-}
-
-export async function apiDelete(id: number) {
-  config.authRequired = true;
-
-  const response = await apiHandler.delete(`${endpoint}/${id}`, config);
-
-  return response.data;
-}
+export const apiDelete = async (id: number) =>
+  await apiHandler.delete(`${endpoint}/${id}`, config);
