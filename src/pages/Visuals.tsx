@@ -1,6 +1,5 @@
 import ControlLayout from "../components/ControlLayout/ControlLayout";
 
-// import { useNewsService } from "../services/NewsService";
 import ControlLayoutButton from "../components/ControlLayout/ControlLayoutButton";
 
 import FilterComponent from "../components/FilterComponent";
@@ -8,11 +7,19 @@ import SearchComponent from "../components/SearchComponent";
 
 import { useDisclosure } from "@mantine/hooks";
 import AddVisualsModal from "../sections/AddVisualsModal";
-import VisualsItem from "../components/VisualsItem";
+import { useVisualsService } from "../services/VisualsService";
+import { VisualsItemApiType } from "../types/VisualsItemTypes";
+import { Table } from "@mantine/core";
+import VisualRow from "../components/VisualRow";
 
 export default function Visuals() {
-  //   const newsService = useNewsService();
-  const fakeImage = "https://www.youtube.com/embed/PlKeif7wAzY";
+  const tableHeaders = ["الفيديو", "العنوان", "التاريخ", "اجراء"];
+
+  const service = useVisualsService();
+  const { typedData, isLoading } = service.Get();
+
+  console.log(typedData);
+
   //   if (newsService.isLoading) return <p>loading...</p>;
   const filterOne = <FilterComponent label="عـام" data={["2023", "2024"]} />;
 
@@ -25,6 +32,7 @@ export default function Visuals() {
           onOpen: open,
           onClose: close,
         }}
+        selectedItem={undefined}
       />
 
       {/* Control Elements  */}
@@ -35,16 +43,35 @@ export default function Visuals() {
       />
       {/* page content  */}
       <section className="bg-white rounded my-2 px-2 pt-8 flex flex-col gap-y-2">
-        {[1, 2, 3, 4, 5].map((item: number) => (
-          <div className="odd:bg-[#f8f9fa] even:bg-white  p-3" key={item}>
-            <VisualsItem
-              link={fakeImage}
-              title="د . أحمد النداف رئيس الجامعة الإسلامية التعريف بالجامعة "
-              date="2024-02-02"
-              id="1"
-            />
-          </div>
-        ))}
+        <Table
+          withRowBorders={false}
+          verticalSpacing={"md"}
+          className="border-separate"
+          style={{ borderSpacing: "0 10px" }}
+        >
+          <Table.Thead>
+            <Table.Tr>
+              {tableHeaders.map((item: string, idx: number) => (
+                <Table.Th key={idx} className="text-center ">
+                  {item}
+                </Table.Th>
+              ))}
+            </Table.Tr>
+          </Table.Thead>
+          <Table.Tbody>
+            {typedData?.map((item: VisualsItemApiType) => (
+              <VisualRow
+                data={item}
+                _class="bg-tw-body"
+                key={item.newsVedioId}
+                addDetails={(_event, x) => {
+                  // setDetailsData(x);
+                  // detailModalOpen();
+                }}
+              />
+            ))}
+          </Table.Tbody>
+        </Table>
       </section>
     </div>
   );

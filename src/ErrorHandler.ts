@@ -3,6 +3,7 @@ import { NoTokenError } from "./errors/NoTokenError";
 import { API_TOKEN_KEY } from "./store/AuthStore";
 
 export default function ErrorHandler(error: Error) {
+  console.log(error);
   if (error instanceof NoTokenError) {
     noTokenErrorHandler();
     return;

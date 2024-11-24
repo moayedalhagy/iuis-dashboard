@@ -6,14 +6,8 @@ export type VisualsItemElementType = {
   title: string;
 };
 export type VisualsItemApiType = {
-  newsVedioId: number;
-  title: number;
+  newsVedioId: string;
+  title: string;
   newsVedioDate: string;
   link: string;
 };
-
-// "newsVedioId": 3,
-// "title": "string",
-// "link": "string",
-// "newsVedioDate": "2024-09-11",
-// "newsCategory": null

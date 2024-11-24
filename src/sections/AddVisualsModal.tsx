@@ -4,6 +4,9 @@ import { Textarea, TextInput, Alert } from "@mantine/core";
 import "@mantine/tiptap/styles.css";
 import { useState } from "react";
 import { isValidUrl, urlHandler } from "../services/Helper";
+import { SubmitHandler, useForm } from "react-hook-form";
+import { VisualsItemApiType } from "../types/VisualsItemTypes";
+import { useVisualsService } from "../services/VisualsService";
 
 type ModalParamType = {
   opened: boolean;
@@ -12,10 +15,52 @@ type ModalParamType = {
 };
 type ParamType = {
   modal: ModalParamType;
+  selectedItem: VisualsItemApiType | null | undefined;
 };
 
-export default function AddVisualsModal({ modal }: ParamType) {
+export default function AddVisualsModal({ modal, selectedItem }: ParamType) {
   const [previewOk, setPreviewOk] = useState("");
+
+  const service = useVisualsService();
+  const update = service.update;
+
+  const {
+    register,
+    handleSubmit,
+
+    reset,
+
+    formState: { errors },
+  } = useForm<VisualsItemApiType>({
+    defaultValues: {
+      newsVedioId: selectedItem?.newsVedioId,
+      link: selectedItem?.link,
+      title: selectedItem?.title,
+      newsVedioDate: selectedItem?.newsVedioDate,
+    },
+  });
+
+  const onSubmit: SubmitHandler<VisualsItemApiType> = (
+    data: VisualsItemApiType
+  ) => {
+    if (selectedItem) {
+      update.mutate({ id: selectedItem.newsVedioId, data });
+    } else {
+      service.create({
+        link: "link",
+        title: "title",
+        newsVedioDate: "2025-02-02",
+        newsVedioId: "1",
+      });
+      console.log(data);
+    }
+    reset({
+      link: "",
+      title: "",
+    });
+
+    modal.onClose();
+  };
 
   return (
     <ModalComponent
@@ -25,14 +70,21 @@ export default function AddVisualsModal({ modal }: ParamType) {
         onClose: modal.onClose,
       }}
       title="اضافة فيديو"
-      handleClick={() => null}
+      handleClick={handleSubmit(onSubmit)}
     >
       <section className="form space-y-3 ">
         {/* news mini description */}
-        <Textarea withAsterisk label="عنوان الفيديو" description=" " error="" />
+        <Textarea
+          {...register("title")}
+          withAsterisk
+          label="عنوان الفيديو"
+          description=" "
+          error=""
+        />
 
         <div className="new-image-section space-y-4">
           <TextInput
+            {...register("link")}
             withAsterisk
             label="رابط الفيديو"
             description="ادخل عنوان url صحيح , وتاكد من معاينة الفيديو قبل الحفظ"
@@ -68,7 +120,7 @@ export default function AddVisualsModal({ modal }: ParamType) {
           )}
         </div>
       </section>
-    </ModalComponent >
+    </ModalComponent>
   );
 }
 
