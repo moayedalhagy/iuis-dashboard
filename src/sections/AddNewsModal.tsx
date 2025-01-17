@@ -69,7 +69,8 @@ export default function AddNewsModal({ modal }: ParamType) {
   } = useForm<Inputs>();
 
   const onSubmit: SubmitHandler<any> = (data: NewsCardApiType) => {
-    service.create(data);
+    console.log(data);
+    // service.create(data);
   };
 
   const handleMainImage = (e: any) => {

@@ -14,19 +14,19 @@ export async function getNews() {
 
 export async function createNews(data: any) {
   config.authRequired = true;
-  data;
-  const datax = {
-    newsCategoryId: 1,
-    cardImageLink: "string",
-    title: "string",
-    description: "string",
-    newsDate: "2021-01-01",
-    newsTime: "12:00:00",
-    newsBodyText: "string",
-    newsLink: "string",
-    views: 0,
-  };
-  const response = await apiHandler.post(`${endpoint}`, datax);
+
+  // const datax = {
+  //   newsCategoryId: 1,
+  //   cardImageLink: "string",
+  //   title: "string",
+  //   description: "string",
+  //   newsDate: "2021-01-01",
+  //   newsTime: "12:00:00",
+  //   newsBodyText: "string",
+  //   newsLink: "string",
+  //   views: 0,
+  // };
+  const response = await apiHandler.post(`${endpoint}`, data);
   return response;
 }
 

@@ -46,13 +46,10 @@ export default function AddVisualsModal({ modal, selectedItem }: ParamType) {
     if (selectedItem) {
       update.mutate({ id: selectedItem.newsVedioId, data });
     } else {
-      service.create({
-        link: "link",
-        title: "title",
-        newsVedioDate: "2025-02-02",
-        newsVedioId: "1",
-      });
       console.log(data);
+
+      service.create(data);
+      return;
     }
     reset({
       link: "",

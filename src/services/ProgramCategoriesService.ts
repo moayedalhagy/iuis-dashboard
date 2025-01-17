@@ -4,34 +4,32 @@ import {
   apiCreate,
   apiDelete,
   apiUpdate,
-} from "../api/ApiNewsCategory";
+} from "../api/ApiProgramCategory";
 import { QueryKeyEnum } from "../enums/QueryKeyEnum";
 import ErrorHandler from "../ErrorHandler";
 
-import { NewsCategoryType } from "../types/CategoryType";
+import { ProgramCategoryType } from "../types/CategoryType";
 import NotificationSuccess from "../components/NotificationSuccess";
 
 import apiHandler from "../ApiConfig";
-import { VisualsItemApiType } from "../types/VisualsItemTypes";
 
-const endpoint = "/VediosNews";
+const endpoint = "/AcademicCategories";
 
 const notify = (title: string, message: string) => {
-  const audio = new Audio("/success.mp3"); // ضع مسار ملف الصوت هنا
-  audio.play().catch((err) => console.error("Error playing sound:", err));
+  // const audio = new Audio("/success.mp3"); // ضع مسار ملف الصوت هنا
+  // audio.play().catch((err) => console.error("Error playing sound:", err));
   NotificationSuccess({
     title: title,
     message: message,
   });
 };
-
-export function useVisualsService() {
+export function useProgramCategoriesService() {
   const queryClient = useQueryClient();
 
   // استعلام القراءة (get)
   const Get = () => {
     const query = useQuery({
-      queryKey: [QueryKeyEnum.visuals],
+      queryKey: [QueryKeyEnum.programCategories],
       queryFn: () => apiHandler.get(`${endpoint}`),
     });
 
@@ -45,18 +43,18 @@ export function useVisualsService() {
       isStale: query.isStale,
       data: query.data,
       typedData: query.data?.data.success
-        ? (query.data.data.data as Array<VisualsItemApiType>)
+        ? (query.data.data.data as Array<ProgramCategoryType>)
         : null,
     };
   };
 
   // استعلام الإنشاء (create)
   const create = useMutation({
-    mutationKey: [QueryKeyEnum.visuals],
+    mutationKey: [QueryKeyEnum.programCategories],
     mutationFn: (data: any) => apiHandler.post(`${endpoint}`, data), // دالة الإنشاء في API
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: [QueryKeyEnum.visuals],
+        queryKey: [QueryKeyEnum.programCategories],
       }); // إعادة تحديث الأخبار
 
       notify("رسالة نجاح", `تم اضافة البيانات بنجاح`);
@@ -68,11 +66,11 @@ export function useVisualsService() {
   // استعلام التحديث (update)
   // apiUpdate
   const update = useMutation({
-    mutationKey: [QueryKeyEnum.visuals],
+    mutationKey: [QueryKeyEnum.programCategories],
     mutationFn: ({ id, data }: any) => apiUpdate(id, data), // دالة التحديث في API
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: [QueryKeyEnum.visuals],
+        queryKey: [QueryKeyEnum.programCategories],
       });
       notify("رسالة نجاح", `تم اضافة البيانات بنجاح`);
     },
@@ -84,7 +82,7 @@ export function useVisualsService() {
     mutationFn: apiDelete, // دالة الحذف في API
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: [QueryKeyEnum.visuals],
+        queryKey: [QueryKeyEnum.programCategories],
       }); // إعادة تحديث الأخبار
 
       notify("رسالة نجاح", `تم حذف البيانات بنجاح`);
@@ -94,15 +92,8 @@ export function useVisualsService() {
 
   return {
     Get, // استخدام البيانات (قراءة)
-
-    //////
-    create: ({ link, title }: Pick<VisualsItemApiType, "link" | "title">) =>
-      create.mutate({ link, title }), // إنشاء خبر جديد
-
-    //////
+    create: (data: ProgramCategoryType) => create.mutate(data), // إنشاء خبر جديد
     update,
-
-    //////
     delete: (id: number) => remove.mutate(id), // حذف خبر
   };
 }
