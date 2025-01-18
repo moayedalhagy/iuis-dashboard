@@ -1,6 +1,5 @@
 import ControlLayout from "../components/ControlLayout/ControlLayout";
 
-
 import ControlLayoutButton from "../components/ControlLayout/ControlLayoutButton";
 
 import SearchComponent from "../components/SearchComponent";
@@ -9,18 +8,28 @@ import { useDisclosure } from "@mantine/hooks";
 
 import { Table, Group, Button } from "@mantine/core";
 import { RiEdit2Line } from "@remixicon/react";
-import { useDecisionsCategoriesService } from "../services/DecisionsCategoriesService";
+// import { useDecisionsCategoriesService } from "../services/DecisionsCategoriesService";
 import Loading from "../components/Loading";
 import ConfirmDelete from "../components/ConfirmDelete";
 import AddDecisionsCategoryModal from "../sections/AddDecisionsCategoryModal";
 import { useState } from "react";
 import { DecisionsCategoryType } from "../types/CategoryType";
+import { useApiService } from "../services/ApiService";
+import { QueryKeyEnum } from "../enums/QueryKeyEnum";
+import { ApiEndpointsEnum } from "../enums/ApiEndpointsEnum";
 
 export default function CategoryDecisions() {
+  // const apiService = useDecisionsCategoriesService();
+  //api service
+  const apiService = useApiService<DecisionsCategoryType>({
+    endpoint: ApiEndpointsEnum.DecisionsTypes,
+    queryKey: [QueryKeyEnum.decisionsCategories],
+  });
 
-  const decisionsCategoriesService = useDecisionsCategoriesService();
-  const getData = decisionsCategoriesService.Get();
+  const { typedData, isLoading } = apiService.Get();
+
   const [opened, { open, close }] = useDisclosure(false);
+
   const [selectedItem, setSelectedItem] =
     useState<DecisionsCategoryType | null>();
 
@@ -29,9 +38,11 @@ export default function CategoryDecisions() {
     open();
   };
 
-  return getData.isLoading ? (
-    <Loading />
-  ) : (
+  if (isLoading) {
+    return <Loading />;
+  }
+
+  return (
     <div className="p-5">
       <AddDecisionsCategoryModal
         modal={{
@@ -51,7 +62,6 @@ export default function CategoryDecisions() {
               setSelectedItem(null);
               open();
             }}
-
           />
         }
         search={<SearchComponent />}
@@ -67,7 +77,7 @@ export default function CategoryDecisions() {
             </Table.Tr>
           </Table.Thead>
           <Table.Tbody>
-            {getData.typedData?.map((element) => (
+            {typedData?.map((element) => (
               <Table.Tr key={element.decisionTypeId}>
                 <Table.Td>{element.decisionTypeId}</Table.Td>
                 <Table.Td>{element.decisionTypeName}</Table.Td>
@@ -84,10 +94,11 @@ export default function CategoryDecisions() {
                       <RiEdit2Line />
                     </Button>
                     <ConfirmDelete
-                      onConfirm={() => decisionsCategoriesService.delete(element.decisionTypeId)}
+                      onConfirm={() =>
+                        apiService.delete(element.decisionTypeId)
+                      }
                       onCancel={() => null}
                       className="h-[30px] w-[30px]   p-2"
-
                       style={{
                         variant: "outline",
                         mt: "md",
@@ -95,7 +106,6 @@ export default function CategoryDecisions() {
                         color: "red",
                         size: "xs",
                       }}
-
                     />
                   </Group>
                 </Table.Td>

@@ -7,23 +7,35 @@ import SearchComponent from "../components/SearchComponent";
 
 import { useDisclosure } from "@mantine/hooks";
 import AddVisualsModal from "../sections/AddVisualsModal";
-import { useVisualsService } from "../services/VisualsService";
+
 import { VisualsItemApiType } from "../types/VisualsItemTypes";
 import { Table } from "@mantine/core";
 import VisualRow from "../components/VisualRow";
+import { ApiEndpointsEnum } from "../enums/ApiEndpointsEnum";
+import { QueryKeyEnum } from "../enums/QueryKeyEnum";
+
+import { useApiService } from "../services/ApiService";
+
+import Loading from "../components/Loading";
 
 export default function Visuals() {
   const tableHeaders = ["الفيديو", "العنوان", "التاريخ", "اجراء"];
 
-  const service = useVisualsService();
-  const { typedData, isLoading } = service.Get();
+  const apiService = useApiService<VisualsItemApiType>({
+    endpoint: ApiEndpointsEnum.VediosNews,
+    queryKey: [QueryKeyEnum.visuals],
+  });
+  const { typedData, isLoading } = apiService.Get();
 
-  console.log(typedData);
-
-  //   if (newsService.isLoading) return <p>loading...</p>;
   const filterOne = <FilterComponent label="عـام" data={["2023", "2024"]} />;
 
   const [opened, { open, close }] = useDisclosure(false);
+
+  if (isLoading) {
+    return <Loading />;
+  }
+
+  //
   return (
     <div className="p-5">
       <AddVisualsModal

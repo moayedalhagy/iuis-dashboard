@@ -2,36 +2,44 @@ import { useDisclosure } from "@mantine/hooks";
 import { Table, Group, Button } from "@mantine/core";
 import { RiEdit2Line } from "@remixicon/react";
 
-
 //components
 import Loading from "../components/Loading";
 import ControlLayout from "../components/ControlLayout/ControlLayout";
 import ControlLayoutButton from "../components/ControlLayout/ControlLayoutButton";
 import SearchComponent from "../components/SearchComponent";
-import { useNewsCategoriesService } from "../services/NewsCategoriesService";
+
 //types
 import { NewsCategoryType } from "../types/CategoryType";
 import ConfirmDelete from "../components/ConfirmDelete";
 import AddNewsCategoryModal from "../sections/AddNewsCategoryModal";
 import { useState } from "react";
+import { useApiService } from "../services/ApiService";
+import { QueryKeyEnum } from "../enums/QueryKeyEnum";
+import { ApiEndpointsEnum } from "../enums/ApiEndpointsEnum";
 
 export default function CategoryNews() {
   //hooks
-  const newsCategoriesService = useNewsCategoriesService();
+
+  const apiService = useApiService<NewsCategoryType>({
+    endpoint: ApiEndpointsEnum.NewsCategoriesNames,
+    queryKey: [QueryKeyEnum.newsCategories],
+  });
+
   const [opened, { open, close }] = useDisclosure(false);
-  const [selectedItem, setSelectedItem] =
-    useState<NewsCategoryType | null>();
+  const [selectedItem, setSelectedItem] = useState<NewsCategoryType | null>();
 
   const handleEdit = (item: NewsCategoryType) => {
     setSelectedItem(item);
     open();
   };
 
-  const { typedData, isLoading } = newsCategoriesService.Get();
+  const { typedData, isLoading } = apiService.Get();
 
-  return isLoading ? (
-    <Loading />
-  ) : (
+  if (isLoading) {
+    return <Loading />;
+  }
+
+  return (
     <div className="p-5">
       <AddNewsCategoryModal
         modal={{
@@ -44,12 +52,15 @@ export default function CategoryNews() {
 
       {/* Control Elements  */}
       <ControlLayout
-        button={<ControlLayoutButton label="إضافة تصنيف"
-
-          clickHandler={() => {
-            setSelectedItem(null);
-            open();
-          }} />}
+        button={
+          <ControlLayoutButton
+            label="إضافة تصنيف"
+            clickHandler={() => {
+              setSelectedItem(null);
+              open();
+            }}
+          />
+        }
         search={<SearchComponent />}
       />
       {/* page content  */}
@@ -83,7 +94,7 @@ export default function CategoryNews() {
                     <ConfirmDelete
                       className="h-[30px] w-[30px]   p-2"
                       onConfirm={() =>
-                        newsCategoriesService.delete(element.newsCategoryId)
+                        apiService.delete(element.newsCategoryId)
                       }
                       onCancel={() => null}
                       style={{
@@ -92,7 +103,6 @@ export default function CategoryNews() {
                         radius: "md",
                         color: "red",
                         size: "xs",
-
                       }}
                     />
                   </Group>

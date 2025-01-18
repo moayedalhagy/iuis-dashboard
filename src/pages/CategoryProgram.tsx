@@ -7,16 +7,24 @@ import Loading from "../components/Loading";
 import ControlLayout from "../components/ControlLayout/ControlLayout";
 import ControlLayoutButton from "../components/ControlLayout/ControlLayoutButton";
 import SearchComponent from "../components/SearchComponent";
-import { useProgramCategoriesService } from "../services/ProgramCategoriesService";
+
 //types
 import { ProgramCategoryType } from "../types/CategoryType";
 import ConfirmDelete from "../components/ConfirmDelete";
 import { useState } from "react";
 import AddProgramCategoryModal from "../sections/AddProgramCategoryModal";
+import { useApiService } from "../services/ApiService";
+import { ApiEndpointsEnum } from "../enums/ApiEndpointsEnum";
+import { QueryKeyEnum } from "../enums/QueryKeyEnum";
 
 export default function CategoryProgram() {
   //hooks
-  const programCategoriesService = useProgramCategoriesService();
+
+  const apiService = useApiService<ProgramCategoryType>({
+    endpoint: ApiEndpointsEnum.ProgramCategories,
+    queryKey: [QueryKeyEnum.programCategories],
+  });
+
   const [opened, { open, close }] = useDisclosure(false);
   const [selectedItem, setSelectedItem] =
     useState<ProgramCategoryType | null>();
@@ -26,11 +34,13 @@ export default function CategoryProgram() {
     open();
   };
 
-  const { typedData, isLoading } = programCategoriesService.Get();
+  const { typedData, isLoading } = apiService.Get();
 
-  return isLoading ? (
-    <Loading />
-  ) : (
+  if (isLoading) {
+    return <Loading />;
+  }
+
+  return (
     <div className="p-5">
       <AddProgramCategoryModal
         modal={{
@@ -85,9 +95,7 @@ export default function CategoryProgram() {
                     <ConfirmDelete
                       className="h-[30px] w-[30px]   p-2"
                       onConfirm={() =>
-                        programCategoriesService.delete(
-                          element.academicCategoryId
-                        )
+                        apiService.delete(element.academicCategoryId)
                       }
                       onCancel={() => null}
                       style={{

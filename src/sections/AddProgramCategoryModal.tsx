@@ -6,7 +6,9 @@ import { useForm, SubmitHandler } from "react-hook-form";
 
 import { ProgramCategoryType } from "../types/CategoryType";
 import { useEffect } from "react";
-import { useProgramCategoriesService } from "../services/ProgramCategoriesService";
+import { useApiService } from "../services/ApiService";
+import { ApiEndpointsEnum } from "../enums/ApiEndpointsEnum";
+import { QueryKeyEnum } from "../enums/QueryKeyEnum";
 
 type ModalParamType = {
   opened: boolean;
@@ -22,8 +24,11 @@ export default function AddProgramCategoryModal({
   modal,
   selectedItem,
 }: ParamType) {
-  const service = useProgramCategoriesService();
-  const update = service.update;
+  const apiService = useApiService<ProgramCategoryType>({
+    endpoint: ApiEndpointsEnum.ProgramCategories,
+    queryKey: [QueryKeyEnum.programCategories],
+  });
+
   const {
     register,
     handleSubmit,
@@ -41,9 +46,9 @@ export default function AddProgramCategoryModal({
     data: ProgramCategoryType
   ) => {
     if (selectedItem) {
-      update.mutate({ id: selectedItem.academicCategoryId, data });
+      apiService.update.mutate({ id: selectedItem.academicCategoryId, data });
     } else {
-      service.create(data);
+      apiService.create(data);
     }
     reset({
       academicCategoryName: "",

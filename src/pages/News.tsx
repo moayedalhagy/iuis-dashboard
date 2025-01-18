@@ -1,6 +1,6 @@
 import ControlLayout from "../components/ControlLayout/ControlLayout";
 import NewsCard from "../components/NewsCard";
-import { useNewsService } from "../services/NewsService";
+
 import ControlLayoutButton from "../components/ControlLayout/ControlLayoutButton";
 
 import FilterComponent from "../components/FilterComponent";
@@ -10,22 +10,32 @@ import AddNewsModal from "../sections/AddNewsModal";
 
 import { useDisclosure } from "@mantine/hooks";
 import Loading from "../components/Loading";
+import { useApiService } from "../services/ApiService";
+import { ApiEndpointsEnum } from "../enums/ApiEndpointsEnum";
+import { QueryKeyEnum } from "../enums/QueryKeyEnum";
+import { NewsCardApiType } from "../types/NewsCardTypes";
 
 export default function News() {
-  const newsService = useNewsService();
-  const getNews = newsService.Get();
+  //service
+  const apiService = useApiService<NewsCardApiType>({
+    endpoint: ApiEndpointsEnum.CardsNews,
+    queryKey: [QueryKeyEnum.news],
+  });
+  const { typedData, isLoading } = apiService.Get();
 
   const [opened, { open, close }] = useDisclosure(false);
 
-  if (getNews.isLoading) {
-    return <Loading />;
-  }
   const filterOne = <FilterComponent label="عـام" data={["2023", "2024"]} />;
   const filterTwo = (
     <FilterComponent label="التصنيف" data={["عام", "قرارات"]} />
   );
 
-  if (!getNews.typedData) {
+  if (isLoading) {
+    return <Loading />;
+  }
+
+  if (!typedData) {
+    console.error("no data");
     return;
   }
 
@@ -46,7 +56,7 @@ export default function News() {
       />
       {/* page content  */}
       <section className="my-2 pt-3 flex flex-row flex-wrap justify-around gap-5 ">
-        {getNews.typedData.map((item) => (
+        {typedData.map((item) => (
           <div className=" " key={item.newsId}>
             <NewsCard
               title={item.title}
@@ -54,7 +64,7 @@ export default function News() {
               cardImageLink={item.cardImageLink}
               newsId={item.newsId}
               views={item.views}
-              deleteItem={() => newsService.delete(item.newsId)}
+              deleteItem={() => apiService.delete(item.newsId)}
             />
           </div>
         ))}

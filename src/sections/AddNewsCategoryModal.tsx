@@ -4,9 +4,11 @@ import { TextInput } from "@mantine/core";
 import "@mantine/tiptap/styles.css";
 import { useForm, SubmitHandler } from "react-hook-form";
 
-import { useNewsCategoriesService } from "../services/NewsCategoriesService";
 import { NewsCategoryType } from "../types/CategoryType";
 import { useEffect } from "react";
+import { useApiService } from "../services/ApiService";
+import { QueryKeyEnum } from "../enums/QueryKeyEnum";
+import { ApiEndpointsEnum } from "../enums/ApiEndpointsEnum";
 
 type ModalParamType = {
   opened: boolean;
@@ -18,9 +20,15 @@ type ParamType = {
   selectedItem: NewsCategoryType | null | undefined;
 };
 
-export default function AddNewsCategoryModal({ modal, selectedItem }: ParamType) {
-  const service = useNewsCategoriesService();
-  const update = service.update;
+export default function AddNewsCategoryModal({
+  modal,
+  selectedItem,
+}: ParamType) {
+  const apiService = useApiService<NewsCategoryType>({
+    endpoint: ApiEndpointsEnum.NewsCategoriesNames,
+    queryKey: [QueryKeyEnum.newsCategories],
+  });
+
   const {
     register,
     handleSubmit,
@@ -34,27 +42,24 @@ export default function AddNewsCategoryModal({ modal, selectedItem }: ParamType)
     },
   });
 
-
   const onSubmit: SubmitHandler<NewsCategoryType> = (
     data: NewsCategoryType
   ) => {
     if (selectedItem) {
-      update.mutate({ id: selectedItem.newsCategoryId, data });
+      apiService.update.mutate({ id: selectedItem.newsCategoryId, data });
     } else {
-      service.create(data);
+      apiService.create(data);
     }
     reset({
       newsCategoryName: "",
-    })
+    });
 
     modal.onClose();
-  }
+  };
 
   useEffect(() => {
     setValue("newsCategoryName", selectedItem?.newsCategoryName || ""); // Set initial value for decisionTypeName
   }, [selectedItem, setValue]);
-
-
 
   return (
     <ModalComponent

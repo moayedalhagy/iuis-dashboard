@@ -5,9 +5,10 @@ import "@mantine/tiptap/styles.css";
 import { useForm, SubmitHandler } from "react-hook-form";
 
 import { DecisionsCategoryType } from "../types/CategoryType";
-import { useDecisionsCategoriesService } from "../services/DecisionsCategoriesService";
 import { useEffect } from "react";
-
+import { useApiService } from "../services/ApiService";
+import { QueryKeyEnum } from "../enums/QueryKeyEnum";
+import { ApiEndpointsEnum } from "../enums/ApiEndpointsEnum";
 
 type ModalParamType = {
   opened: boolean;
@@ -23,8 +24,12 @@ export default function AddDecisionsCategoryModal({
   modal,
   selectedItem,
 }: ParamType) {
-  const service = useDecisionsCategoriesService();
-  const update = service.update;
+  const apiService = useApiService<DecisionsCategoryType>({
+    endpoint: ApiEndpointsEnum.DecisionsTypes,
+    queryKey: [QueryKeyEnum.decisionsCategories],
+  });
+
+  // const update = apiService.update;
 
   const {
     register,
@@ -43,14 +48,13 @@ export default function AddDecisionsCategoryModal({
     data: DecisionsCategoryType
   ) => {
     if (selectedItem) {
-
-      update.mutate({ id: selectedItem.decisionTypeId, data });
+      apiService.update.mutate({ id: selectedItem.decisionTypeId, data });
     } else {
-      service.create(data);
+      apiService.create(data);
     }
     reset({
       decisionTypeName: "",
-    })
+    });
 
     modal.onClose();
   };
@@ -58,8 +62,6 @@ export default function AddDecisionsCategoryModal({
   useEffect(() => {
     setValue("decisionTypeName", selectedItem?.decisionTypeName || ""); // Set initial value for decisionTypeName
   }, [selectedItem, setValue]);
-
-
 
   return (
     <ModalComponent

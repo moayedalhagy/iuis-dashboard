@@ -5,9 +5,12 @@ import "@mantine/tiptap/styles.css";
 import { useState } from "react";
 import { isValidUrl, urlHandler } from "../services/Helper";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { VisualsItemApiType } from "../types/VisualsItemTypes";
-import { useVisualsService } from "../services/VisualsService";
 
+import { VisualsItemApiType } from "../types/VisualsItemTypes";
+import { ApiEndpointsEnum } from "../enums/ApiEndpointsEnum";
+import { QueryKeyEnum } from "../enums/QueryKeyEnum";
+
+import { useApiService } from "../services/ApiService";
 type ModalParamType = {
   opened: boolean;
   onOpen: () => void;
@@ -21,15 +24,15 @@ type ParamType = {
 export default function AddVisualsModal({ modal, selectedItem }: ParamType) {
   const [previewOk, setPreviewOk] = useState("");
 
-  const service = useVisualsService();
-  const update = service.update;
+  const apiService = useApiService<VisualsItemApiType>({
+    endpoint: ApiEndpointsEnum.VediosNews,
+    queryKey: [QueryKeyEnum.visuals],
+  });
 
   const {
     register,
     handleSubmit,
-
     reset,
-
     formState: { errors },
   } = useForm<VisualsItemApiType>({
     defaultValues: {
@@ -44,11 +47,11 @@ export default function AddVisualsModal({ modal, selectedItem }: ParamType) {
     data: VisualsItemApiType
   ) => {
     if (selectedItem) {
-      update.mutate({ id: selectedItem.newsVedioId, data });
+      apiService.update.mutate({ id: selectedItem.newsVedioId, data });
     } else {
       console.log(data);
 
-      service.create(data);
+      apiService.create(data);
       return;
     }
     reset({

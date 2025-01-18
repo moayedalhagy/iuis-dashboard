@@ -21,9 +21,14 @@ import {
   TextInput,
   FileInput,
 } from "@mantine/core";
-import { NewsCardApiType } from "../types/NewsCardTypes";
+
 import { useState } from "react";
-import { useNewsService } from "../services/NewsService";
+
+import { useApiService } from "../services/ApiService";
+import { ApiEndpointsEnum } from "../enums/ApiEndpointsEnum";
+import { QueryKeyEnum } from "../enums/QueryKeyEnum";
+import { NewsCardApiType } from "../types/NewsCardTypes";
+
 type ModalParamType = {
   opened: boolean;
   onOpen: () => void;
@@ -52,7 +57,13 @@ export default function AddNewsModal({ modal }: ParamType) {
   const [mainImagePreview, setMainImagePreview] = useState<string | null>(null);
   const [linkedImages, setLinkedImages] = useState<File[]>([]);
   const [keywords, setKeywords] = useState<Array<string>>([]);
-  const service = useNewsService();
+
+  //service
+  const apiService = useApiService<NewsCardApiType>({
+    endpoint: ApiEndpointsEnum.CardsNews,
+    queryKey: [QueryKeyEnum.news],
+  });
+
   const editorElement = useEditor({
     extensions: [StarterKit],
     content: "",
@@ -70,7 +81,8 @@ export default function AddNewsModal({ modal }: ParamType) {
 
   const onSubmit: SubmitHandler<any> = (data: NewsCardApiType) => {
     console.log(data);
-    // service.create(data);
+
+    apiService.create(data);
   };
 
   const handleMainImage = (e: any) => {
