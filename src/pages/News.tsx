@@ -14,6 +14,7 @@ import { useApiService } from "../services/ApiService";
 import { ApiEndpointsEnum } from "../enums/ApiEndpointsEnum";
 import { QueryKeyEnum } from "../enums/QueryKeyEnum";
 import { NewsCardApiType } from "../types/NewsCardTypes";
+import { useState } from "react";
 
 export default function News() {
   //service
@@ -24,6 +25,9 @@ export default function News() {
   const { typedData, isLoading } = apiService.Get();
 
   const [opened, { open, close }] = useDisclosure(false);
+
+  const [selectedItem, setSelectedItem] = useState<NewsCardApiType | null>();
+  const [viewOnly, setViewOnly] = useState(false);
 
   const filterOne = <FilterComponent label="عـام" data={["2023", "2024"]} />;
   const filterTwo = (
@@ -38,15 +42,20 @@ export default function News() {
     console.error("no data");
     return;
   }
-  console.log(typedData);
+
   return (
     <div className="p-5">
       <AddNewsModal
         modal={{
           opened: opened,
           onOpen: open,
-          onClose: close,
+          onClose: () => {
+            setSelectedItem(null); // Reset the selected item when the modal is closed
+            close();
+          },
         }}
+        selectedItem={selectedItem}
+        viewOnly={viewOnly}
       />
       {/* Control Elements  */}
       <ControlLayout

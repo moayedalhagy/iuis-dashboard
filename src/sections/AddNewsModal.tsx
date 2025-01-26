@@ -22,12 +22,13 @@ import {
   FileInput,
 } from "@mantine/core";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { useApiService } from "../services/ApiService";
 import { ApiEndpointsEnum } from "../enums/ApiEndpointsEnum";
 import { QueryKeyEnum } from "../enums/QueryKeyEnum";
 import { NewsCardApiType } from "../types/NewsCardTypes";
+import { useInitValues } from "../hooks/useInitValues";
 
 type ModalParamType = {
   opened: boolean;
@@ -36,10 +37,13 @@ type ModalParamType = {
 };
 type ParamType = {
   modal: ModalParamType;
+  selectedItem: NewsCardApiType | null | undefined;
+  viewOnly: boolean;
 };
 
 type Inputs = Pick<
   NewsCardApiType,
+  | "newsId"
   | "title"
   | "description"
   | "cardImageLink"
@@ -52,7 +56,11 @@ type Inputs = Pick<
   video_link: string;
 };
 
-export default function AddNewsModal({ modal }: ParamType) {
+export default function AddNewsModal({
+  modal,
+  selectedItem,
+  viewOnly = false,
+}: ParamType) {
   const [mainImage, setMainImage] = useState<File | null>(null);
   const [mainImagePreview, setMainImagePreview] = useState<string | null>(null);
   const [linkedImages, setLinkedImages] = useState<File[]>([]);
@@ -75,14 +83,23 @@ export default function AddNewsModal({ modal }: ParamType) {
     register,
     handleSubmit,
     setValue,
-
+    reset,
     formState: { errors },
-  } = useForm<Inputs>();
+  } = useForm<Inputs>({
+    defaultValues: {
+      newsId: selectedItem?.newsId,
+    },
+  });
 
-  const onSubmit: SubmitHandler<any> = (data: NewsCardApiType) => {
-    console.log(data);
-
-    apiService.create(data);
+  const onSubmit: SubmitHandler<NewsCardApiType> = (data: NewsCardApiType) => {
+    if (selectedItem) {
+      apiService.update.mutate({ id: selectedItem.newsId, data });
+    } else {
+      apiService.create(data);
+      return;
+    }
+    reset();
+    modal.onClose();
   };
 
   const handleMainImage = (e: any) => {
@@ -103,6 +120,19 @@ export default function AddNewsModal({ modal }: ParamType) {
     setValue("keywords", e);
   };
 
+  useInitValues({
+    selectedItem,
+    setValue,
+    fields: [
+      "title",
+      "description",
+      "cardImageLink",
+      "newsBodyText",
+      "newsCategoryName",
+    ],
+    setters: [],
+  });
+
   return (
     <ModalComponent
       modal={{
@@ -112,6 +142,7 @@ export default function AddNewsModal({ modal }: ParamType) {
       }}
       title="اضافة خبر"
       handleClick={handleSubmit(onSubmit)}
+      okButtonDisabled={viewOnly}
     >
       <form className="form space-y-3 " onSubmit={handleSubmit(onSubmit)}>
         {/* news title */}

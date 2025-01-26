@@ -11,6 +11,7 @@ import { ApiEndpointsEnum } from "../enums/ApiEndpointsEnum";
 import { QueryKeyEnum } from "../enums/QueryKeyEnum";
 
 import { useApiService } from "../services/ApiService";
+import { useInitValues } from "../hooks/useInitValues";
 type ModalParamType = {
   opened: boolean;
   onOpen: () => void;
@@ -55,8 +56,6 @@ export default function AddVisualsModal({
     if (selectedItem) {
       apiService.update.mutate({ id: selectedItem.newsVedioId, data });
     } else {
-      console.log(data);
-
       apiService.create(data);
       return;
     }
@@ -68,12 +67,18 @@ export default function AddVisualsModal({
     modal.onClose();
   };
 
-  useEffect(() => {
-    // Set initial value
-    setValue("title", selectedItem?.title || "");
-    setValue("link", selectedItem?.link || "");
-    setPreviewOk(selectedItem?.link || "");
-  }, [selectedItem, setValue]);
+  // useEffect(() => {
+  //   // Set initial value
+  //   setValue("title", selectedItem?.title || "");
+  //   setValue("link", selectedItem?.link || "");
+  //   setPreviewOk(selectedItem?.link || "");
+  // }, [selectedItem, setValue]);
+  useInitValues({
+    selectedItem,
+    setValue,
+    fields: ["title", "link"],
+    setters: [() => setPreviewOk(selectedItem?.link || "")],
+  });
 
   return (
     <ModalComponent
