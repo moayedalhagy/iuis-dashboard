@@ -37,13 +37,17 @@ export function useApiService<T>({ endpoint, queryKey }: Params<T>) {
       ErrorHandler(query.error);
     }
 
+    const queryData = query.data?.data.data;
+    const paginatedResponse =
+      queryData && queryData.metaData ? queryData.data : queryData;
+
     return {
       isLoading: query.isLoading,
       isError: query.isError,
       isStale: query.isStale,
       data: query.data,
       typedData: query.data?.data.success
-        ? (query.data.data.data.data as Array<T>)
+        ? (paginatedResponse as Array<T>)
         : null,
     };
   };
