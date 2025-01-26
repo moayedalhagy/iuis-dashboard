@@ -43,7 +43,7 @@ export function useApiService<T>({ endpoint, queryKey }: Params<T>) {
       isStale: query.isStale,
       data: query.data,
       typedData: query.data?.data.success
-        ? (query.data.data.data as Array<T>)
+        ? (query.data.data.data.data as Array<T>)
         : null,
     };
   };

@@ -38,7 +38,7 @@ export default function News() {
     console.error("no data");
     return;
   }
-
+  console.log(typedData);
   return (
     <div className="p-5">
       <AddNewsModal
