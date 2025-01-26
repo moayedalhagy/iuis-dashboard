@@ -93,6 +93,6 @@ export function useApiService<T>({ endpoint, queryKey }: Params<T>) {
     Get, // استخدام البيانات (قراءة)
     create: (data: T) => create.mutate(data), // إنشاء خبر جديد
     update,
-    delete: (id: number) => remove.mutate(id), // حذف خبر
+    delete: (id: number | string) => remove.mutate(id), // حذف خبر
   };
 }

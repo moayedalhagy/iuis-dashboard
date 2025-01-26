@@ -2,16 +2,23 @@ import { Button, Group, Table } from "@mantine/core";
 
 import { RiDeleteBin7Line, RiEdit2Line, RiEyeLine } from "@remixicon/react";
 import { VisualsItemApiType } from "../types/VisualsItemTypes";
+import ConfirmDelete from "./ConfirmDelete";
 
 type ParamType = {
   _class?: string;
   data: VisualsItemApiType;
   addDetails: (event: any, data: object) => void;
+  deleteItem: () => void;
 };
 
 const rowRoundedRight = "rounded-tr-md  rounded-br-md  ";
 const rowRoundedLeft = "rounded-tl-md  rounded-bl-md  ";
-export default function VisualRow({ data, _class, addDetails }: ParamType) {
+export default function VisualRow({
+  data,
+  _class,
+  addDetails,
+  deleteItem,
+}: ParamType) {
   return (
     <Table.Tr
       key={data.newsVedioId}
@@ -55,6 +62,18 @@ export default function VisualRow({ data, _class, addDetails }: ParamType) {
             className="h-[30px] w-[30px]   p-2"
           >
             <RiDeleteBin7Line />
+            <ConfirmDelete
+              className="h-[30px] w-[30px]   p-2"
+              onConfirm={deleteItem}
+              onCancel={() => null}
+              style={{
+                variant: "outline",
+                mt: "md",
+                radius: "md",
+                color: "red",
+                size: "xs",
+              }}
+            />
           </Button>
 
           <Button

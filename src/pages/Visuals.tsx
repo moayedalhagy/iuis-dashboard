@@ -25,17 +25,18 @@ export default function Visuals() {
     endpoint: ApiEndpointsEnum.VediosNews,
     queryKey: [QueryKeyEnum.visuals],
   });
+  const [opened, { open, close }] = useDisclosure(false);
+
   const { typedData, isLoading } = apiService.Get();
 
   const filterOne = <FilterComponent label="عـام" data={["2023", "2024"]} />;
-
-  const [opened, { open, close }] = useDisclosure(false);
 
   if (isLoading) {
     return <Loading />;
   }
 
   //
+  console.log(typedData);
   return (
     <div className="p-5">
       <AddVisualsModal
@@ -76,6 +77,7 @@ export default function Visuals() {
                 data={item}
                 _class="bg-tw-body"
                 key={item.newsVedioId}
+                deleteItem={() => apiService.delete(item.newsVedioId)}
                 addDetails={(_event, x) => {
                   // setDetailsData(x);
                   // detailModalOpen();
