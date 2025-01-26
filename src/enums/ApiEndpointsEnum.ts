@@ -4,4 +4,5 @@ export enum ApiEndpointsEnum {
   ProgramCategories = "AcademicCategories",
   CardsNews = "CardsNews",
   VediosNews = "VediosNews",
+  Faqs = "Faqs",
 }

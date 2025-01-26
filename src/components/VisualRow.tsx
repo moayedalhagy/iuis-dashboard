@@ -7,7 +7,6 @@ import ConfirmDelete from "./ConfirmDelete";
 type ParamType = {
   _class?: string;
   data: VisualsItemApiType;
-  addDetails: (event: any, data: object) => void;
   deleteItem: () => void;
   editItem: (data: any) => void;
   showItem: (data: any) => void;
@@ -18,7 +17,6 @@ const rowRoundedLeft = "rounded-tl-md  rounded-bl-md  ";
 export default function VisualRow({
   data,
   _class,
-  addDetails,
   deleteItem,
   editItem,
   showItem,
@@ -68,7 +66,7 @@ export default function VisualRow({
             onCancel={() => null}
             style={{
               variant: "outline",
-              mt: "md",
+
               radius: "md",
               color: "red",
               size: "xs",

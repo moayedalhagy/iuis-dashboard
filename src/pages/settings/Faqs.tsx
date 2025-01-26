@@ -9,25 +9,42 @@ import { useDisclosure } from "@mantine/hooks";
 
 import { FaqsFakeData } from "../../fake";
 import { Table } from "@mantine/core";
-import { ReactSortable } from "react-sortablejs";
+
 import { useState } from "react";
 
 import FaqsRow from "../../components/FaqsRow";
 import AddFaqModal from "../../sections/AddFaqModal";
+import { useApiService } from "../../services/ApiService";
+import { ApiEndpointsEnum } from "../../enums/ApiEndpointsEnum";
+import { QueryKeyEnum } from "../../enums/QueryKeyEnum";
+
+import Loading from "../../components/Loading";
+import { FaqsType } from "../../types/FaqsType";
 
 export default function Faqs() {
-  //   const newsService = useNewsService();
-  //   if (newsService.isLoading) return <p>loading...</p>;
-  const [data, setData] = useState(FaqsFakeData);
+  const tableHeaders = ["#", "نص السؤال", "جواب السؤال", "الأحداث"];
 
-  const tableHeaders = [
-    "الترتيب",
-    "نص السؤال",
-    "جواب السؤال",
-    "الأحداث",
-    "الحالة",
-  ];
+  const apiService = useApiService<FaqsType>({
+    endpoint: ApiEndpointsEnum.Faqs,
+    queryKey: [QueryKeyEnum.faqs],
+  });
+
   const [opened, { open, close }] = useDisclosure(false);
+
+  const { typedData, isLoading } = apiService.Get();
+
+  const [selectedItem, setSelectedItem] = useState<FaqsType | null>();
+  const [viewOnly, setViewOnly] = useState(false);
+
+  const handleEdit = (item: FaqsType, viewOnly: boolean) => {
+    setViewOnly(viewOnly);
+    setSelectedItem(item);
+    open();
+  };
+
+  if (isLoading) {
+    return <Loading />;
+  }
 
   return (
     <div className="p-5">
@@ -35,8 +52,13 @@ export default function Faqs() {
         modal={{
           opened: opened,
           onOpen: open,
-          onClose: close,
+          onClose: () => {
+            setSelectedItem(null); // Reset the selected item when the modal is closed
+            close();
+          },
         }}
+        selectedItem={selectedItem}
+        viewOnly={viewOnly}
       />
 
       {/* Control Elements  */}
@@ -65,25 +87,16 @@ export default function Faqs() {
             </Table.Tr>
           </Table.Thead>
 
-          <ReactSortable
-            animation={400}
-            list={data}
-            setList={setData}
-            tag={Table.Tbody}
-            handle=".drag-handle"
-            onStart={(evt: any) => {
-              evt.item.style.opacity = "0";
-            }}
-            onEnd={(event: any) => {
-              console.log(JSON.parse(event.item.getAttribute("item-data")));
-              // event.oldIndex
-              event.item.style.opacity = "100";
-            }}
-          >
-            {data.map((item) => (
-              <FaqsRow data={item} _class="bg-tw-body" key={item.order} />
-            ))}
-          </ReactSortable>
+          {typedData?.map((item) => (
+            <FaqsRow
+              data={item}
+              _class="bg-tw-body"
+              key={item.questionId}
+              showItem={(data) => handleEdit(data, true)}
+              editItem={(data) => handleEdit(data, false)}
+              deleteItem={() => apiService.delete(item.questionId)}
+            />
+          ))}
         </Table>
       </div>
     </div>

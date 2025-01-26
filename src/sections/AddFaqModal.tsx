@@ -1,11 +1,16 @@
 import ModalComponent from "../components/ModalComponent";
-import { Input, TextInput, Switch } from "@mantine/core";
-import { RichTextEditor } from "@mantine/tiptap";
-
-import { useEditor } from "@tiptap/react";
-import StarterKit from "@tiptap/starter-kit";
+import { Input, TextInput } from "@mantine/core";
 
 import "@mantine/tiptap/styles.css";
+import { FaqsType } from "../types/FaqsType";
+
+import { useApiService } from "../services/ApiService";
+import { QueryKeyEnum } from "../enums/QueryKeyEnum";
+import { ApiEndpointsEnum } from "../enums/ApiEndpointsEnum";
+import { SubmitHandler, useForm } from "react-hook-form";
+import { useInitValues } from "../hooks/useInitValues";
+import { RichTextEditorComponent } from "../components/RichTextEditorComponent";
+import { useEffect, useState } from "react";
 
 type ModalParamType = {
   opened: boolean;
@@ -14,11 +19,53 @@ type ModalParamType = {
 };
 type ParamType = {
   modal: ModalParamType;
+  selectedItem: FaqsType | null | undefined;
+  viewOnly: boolean;
 };
 
-export default function AddFaqModal({ modal }: ParamType) {
-  const editor = useEditor({
-    extensions: [StarterKit],
+export default function AddFaqModal({
+  modal,
+  selectedItem,
+  viewOnly = false,
+}: ParamType) {
+  const apiService = useApiService<FaqsType>({
+    endpoint: ApiEndpointsEnum.Faqs,
+    queryKey: [QueryKeyEnum.faqs],
+  });
+
+  const {
+    register,
+    handleSubmit,
+    reset,
+    setValue,
+    formState: { errors },
+  } = useForm<FaqsType>({
+    defaultValues: {
+      questionId: selectedItem?.questionId,
+      questionText: selectedItem?.questionText,
+      answer: selectedItem?.answer,
+    },
+  });
+
+  const [answer, setAnswer] = useState(selectedItem?.answer || "");
+
+  const onSubmit: SubmitHandler<FaqsType> = (data: FaqsType) => {
+    if (selectedItem) {
+      apiService.update.mutate({ id: selectedItem.questionId, data });
+    } else {
+      apiService.create(data);
+      return;
+    }
+    reset();
+
+    modal.onClose();
+  };
+
+  useInitValues({
+    selectedItem,
+    setValue,
+    fields: ["questionText", "answer"],
+    setters: [() => setAnswer(selectedItem?.answer || "")],
   });
 
   return (
@@ -28,40 +75,36 @@ export default function AddFaqModal({ modal }: ParamType) {
         onOpen: modal.onOpen,
         onClose: modal.onClose,
       }}
+      handleClick={handleSubmit(onSubmit)}
+      okButtonDisabled={viewOnly}
       title="اضافة سؤال"
-      handleClick={() => null}
     >
       <section className="form space-y-3 ">
         {/* program name */}
-        <TextInput withAsterisk label="نص السؤال" description=" " error="" />
-
-        {/* editor  */}
-        <Input.Wrapper
+        <TextInput
+          {...register("questionText")}
           withAsterisk
           label="نص السؤال"
           description=" "
           error=""
-          className="mt-2"
-        >
-          <RichTextEditor editor={editor} className="mt-1">
-            <RichTextEditor.Toolbar sticky stickyOffset={60}>
-              <RichTextEditor.ControlsGroup>
-                <RichTextEditor.Bold />
-                <RichTextEditor.Italic />
-              </RichTextEditor.ControlsGroup>
-            </RichTextEditor.Toolbar>
-
-            <RichTextEditor.Content className="text-sm p-10" />
-          </RichTextEditor>
-        </Input.Wrapper>
-
-        {/* status  */}
-        <Switch
-          defaultChecked
-          color="#03a679"
-          label="حالة البرنامج"
-          className="mt-3  py-3"
         />
+
+        {
+          <Input.Wrapper
+            id="editor"
+            withAsterisk
+            label="جواب السؤال"
+            description=" "
+            error=""
+            className="mt-2"
+          >
+            <RichTextEditorComponent
+              key={answer} // Add a unique key to force re-render
+              value={answer}
+              onChange={(data) => setValue("answer", data)}
+            />
+          </Input.Wrapper>
+        }
       </section>
     </ModalComponent>
   );

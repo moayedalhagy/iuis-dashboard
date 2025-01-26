@@ -4,4 +4,5 @@ export enum QueryKeyEnum {
   decisionsCategories = "decisionsCategories",
   programCategories = "programCategories",
   visuals = "visuals",
+  faqs = "faqs",
 }

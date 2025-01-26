@@ -14,3 +14,7 @@ export function isValidUrl(url: string) {
     return false; // If an error is thrown, the URL is not valid
   }
 }
+
+export function removeHtmlTags(input: string) {
+  return input.replace(/<\/?[^>]+(>|$)/g, "");
+}

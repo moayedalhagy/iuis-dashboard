@@ -92,10 +92,6 @@ export default function Visuals() {
                 showItem={(data) => handleEdit(data, true)}
                 editItem={(data) => handleEdit(data, false)}
                 deleteItem={() => apiService.delete(item.newsVedioId)}
-                addDetails={(_event, x) => {
-                  // setDetailsData(x);
-                  // detailModalOpen();
-                }}
               />
             ))}
           </Table.Tbody>
