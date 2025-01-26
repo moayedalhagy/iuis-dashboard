@@ -139,7 +139,7 @@ function SocialMediaItem({
         />
       </div>
       <Button
-        variant="outline"
+        variant={toggleEdit ? "outline" : "filled"}
         radius="md"
         mt={"xl"}
         color="green"
