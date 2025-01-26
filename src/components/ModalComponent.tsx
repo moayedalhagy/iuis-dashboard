@@ -1,7 +1,6 @@
 import { Modal, Button, Loader } from "@mantine/core";
 import { useIsMutating } from "@tanstack/react-query";
 
-
 type ModalParamType = {
   opened: boolean;
   onOpen: () => void;
@@ -10,21 +9,20 @@ type ModalParamType = {
 type ParamType = {
   modal: ModalParamType;
   title: string;
+  okButtonDisabled?: boolean;
   children: React.ReactNode;
   handleClick: (e: any) => void;
-
 };
 
 export default function ModalComponent({
   modal,
   title,
+  okButtonDisabled = false,
   children,
 
   handleClick,
 }: ParamType) {
-
-
-  const pendingRequest = useIsMutating()
+  const pendingRequest = useIsMutating();
   return (
     <>
       {" "}
@@ -51,10 +49,9 @@ export default function ModalComponent({
             }}
             size="sm"
             onClick={handleClick}
-            disabled={pendingRequest > 0}
+            disabled={pendingRequest > 0 || okButtonDisabled}
           >
-            {pendingRequest > 0 ? <Loader type="dots" color="white" /> : 'حفظ'}
-
+            {pendingRequest > 0 ? <Loader type="dots" color="white" /> : "حفظ"}
           </Button>
 
           <Button
@@ -69,7 +66,7 @@ export default function ModalComponent({
             إلغاء
           </Button>
         </div>
-      </Modal >
+      </Modal>
     </>
   );
 }

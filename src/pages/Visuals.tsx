@@ -17,6 +17,7 @@ import { QueryKeyEnum } from "../enums/QueryKeyEnum";
 import { useApiService } from "../services/ApiService";
 
 import Loading from "../components/Loading";
+import { useState } from "react";
 
 export default function Visuals() {
   const tableHeaders = ["الفيديو", "العنوان", "التاريخ", "اجراء"];
@@ -31,21 +32,32 @@ export default function Visuals() {
 
   const filterOne = <FilterComponent label="عـام" data={["2023", "2024"]} />;
 
+  const [selectedItem, setSelectedItem] = useState<VisualsItemApiType | null>();
+  const [viewOnly, setViewOnly] = useState(false);
+
+  const handleEdit = (item: VisualsItemApiType, viewOnly: boolean) => {
+    setViewOnly(viewOnly);
+    setSelectedItem(item);
+    open();
+  };
+
   if (isLoading) {
     return <Loading />;
   }
 
-  //
-  console.log(typedData);
   return (
     <div className="p-5">
       <AddVisualsModal
         modal={{
           opened: opened,
           onOpen: open,
-          onClose: close,
+          onClose: () => {
+            setSelectedItem(null); // Reset the selected item when the modal is closed
+            close();
+          },
         }}
-        selectedItem={undefined}
+        selectedItem={selectedItem}
+        viewOnly={viewOnly}
       />
 
       {/* Control Elements  */}
@@ -77,6 +89,8 @@ export default function Visuals() {
                 data={item}
                 _class="bg-tw-body"
                 key={item.newsVedioId}
+                showItem={(data) => handleEdit(data, true)}
+                editItem={(data) => handleEdit(data, false)}
                 deleteItem={() => apiService.delete(item.newsVedioId)}
                 addDetails={(_event, x) => {
                   // setDetailsData(x);

@@ -1,6 +1,6 @@
 import { Button, Group, Table } from "@mantine/core";
 
-import { RiDeleteBin7Line, RiEdit2Line, RiEyeLine } from "@remixicon/react";
+import { RiEdit2Line, RiEyeLine } from "@remixicon/react";
 import { VisualsItemApiType } from "../types/VisualsItemTypes";
 import ConfirmDelete from "./ConfirmDelete";
 
@@ -9,6 +9,8 @@ type ParamType = {
   data: VisualsItemApiType;
   addDetails: (event: any, data: object) => void;
   deleteItem: () => void;
+  editItem: (data: any) => void;
+  showItem: (data: any) => void;
 };
 
 const rowRoundedRight = "rounded-tr-md  rounded-br-md  ";
@@ -18,6 +20,8 @@ export default function VisualRow({
   _class,
   addDetails,
   deleteItem,
+  editItem,
+  showItem,
 }: ParamType) {
   return (
     <Table.Tr
@@ -52,29 +56,24 @@ export default function VisualRow({
             radius="md"
             color="green"
             className="h-[30px] w-[30px]   p-2"
+            // onClick={() => handleEdit(data)}
+            onClick={() => editItem(data)}
           >
             <RiEdit2Line />
           </Button>
-          <Button
-            variant="outline"
-            radius="md"
-            color="red"
+
+          <ConfirmDelete
             className="h-[30px] w-[30px]   p-2"
-          >
-            <RiDeleteBin7Line />
-            <ConfirmDelete
-              className="h-[30px] w-[30px]   p-2"
-              onConfirm={deleteItem}
-              onCancel={() => null}
-              style={{
-                variant: "outline",
-                mt: "md",
-                radius: "md",
-                color: "red",
-                size: "xs",
-              }}
-            />
-          </Button>
+            onConfirm={deleteItem}
+            onCancel={() => null}
+            style={{
+              variant: "outline",
+              mt: "md",
+              radius: "md",
+              color: "red",
+              size: "xs",
+            }}
+          />
 
           <Button
             variant="outline"
@@ -82,6 +81,7 @@ export default function VisualRow({
             color="black"
             size="xs"
             className="h-[30px] w-[30px]   p-2"
+            onClick={() => showItem(data)}
           >
             <RiEyeLine />
           </Button>

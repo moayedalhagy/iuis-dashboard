@@ -2,7 +2,7 @@ import ModalComponent from "../components/ModalComponent";
 import { Textarea, TextInput, Alert } from "@mantine/core";
 
 import "@mantine/tiptap/styles.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { isValidUrl, urlHandler } from "../services/Helper";
 import { SubmitHandler, useForm } from "react-hook-form";
 
@@ -19,9 +19,14 @@ type ModalParamType = {
 type ParamType = {
   modal: ModalParamType;
   selectedItem: VisualsItemApiType | null | undefined;
+  viewOnly: boolean;
 };
 
-export default function AddVisualsModal({ modal, selectedItem }: ParamType) {
+export default function AddVisualsModal({
+  modal,
+  selectedItem,
+  viewOnly = false,
+}: ParamType) {
   const [previewOk, setPreviewOk] = useState("");
 
   const apiService = useApiService<VisualsItemApiType>({
@@ -33,6 +38,7 @@ export default function AddVisualsModal({ modal, selectedItem }: ParamType) {
     register,
     handleSubmit,
     reset,
+    setValue,
     formState: { errors },
   } = useForm<VisualsItemApiType>({
     defaultValues: {
@@ -62,6 +68,13 @@ export default function AddVisualsModal({ modal, selectedItem }: ParamType) {
     modal.onClose();
   };
 
+  useEffect(() => {
+    // Set initial value
+    setValue("title", selectedItem?.title || "");
+    setValue("link", selectedItem?.link || "");
+    setPreviewOk(selectedItem?.link || "");
+  }, [selectedItem, setValue]);
+
   return (
     <ModalComponent
       modal={{
@@ -71,6 +84,7 @@ export default function AddVisualsModal({ modal, selectedItem }: ParamType) {
       }}
       title="اضافة فيديو"
       handleClick={handleSubmit(onSubmit)}
+      okButtonDisabled={viewOnly}
     >
       <section className="form space-y-3 ">
         {/* news mini description */}
