@@ -25,6 +25,18 @@ export type NewsCardApiType = {
   }>;
 };
 
+export type NewsXType = {
+  newsCategoryId: number;
+  newsId: number;
+  cardImageLink: string;
+  title: string;
+  description: string;
+  newsBodyText: string;
+  newsImages?: Array<any>;
+  newsKeyword?: string[];
+  videoLinks?: string[];
+};
+
 // "newsId": 1,
 //       "newsCategoryId": 1,
 //       "cardImageLink": "https://picsum.photos/200/300",
