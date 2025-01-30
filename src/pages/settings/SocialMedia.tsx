@@ -20,6 +20,7 @@ import { useApiService } from "../../services/ApiService";
 import { ApiEndpointsEnum } from "../../enums/ApiEndpointsEnum";
 import { QueryKeyEnum } from "../../enums/QueryKeyEnum";
 import Loading from "../../components/Loading";
+import axios from "axios";
 
 type SocialMediaItem = {
   name: string;
@@ -67,9 +68,8 @@ export default function SocialMedia() {
   });
 
   const { typedData, isLoading } = apiService.Get();
-  const updateItem = (item: any) => {
-    apiService.update.mutate({ id: item.socialMediaId, item });
-  };
+  const updateItem = (item: any) =>
+    apiService.update.mutate({ id: item.socialMediaId, data: item });
 
   if (isLoading) {
     return <Loading />;
@@ -121,6 +121,7 @@ function SocialMediaItem({
   const saveItem = () => {
     if (!toggleEdit) {
       updateItem({ ...apiItem, socialMediaLink: link });
+      setToggleEdit(!toggleEdit);
     }
   };
   return (
