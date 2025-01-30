@@ -51,6 +51,7 @@ export default function AddFaqModal({
 
   const onSubmit: SubmitHandler<FaqsType> = (data: FaqsType) => {
     if (selectedItem) {
+      data.questionId = selectedItem.questionId;
       apiService.update.mutate({ id: selectedItem.questionId, data });
     } else {
       apiService.create(data);
