@@ -6,4 +6,5 @@ export enum ApiEndpointsEnum {
   VediosNews = "VediosNews",
   Faqs = "Faqs",
   SocialMedia = "SocialMediasLinks",
+  SayersTestimonies = "SayersTestimonies",
 }

@@ -9,23 +9,55 @@ import SearchComponent from "../components/SearchComponent";
 import { useDisclosure } from "@mantine/hooks";
 import TestimonialItem from "../components/TestimonialItem";
 import AddSayModal from "../sections/AddSayModal";
+import { SayerType } from "../types/SayerType";
+import { useState } from "react";
+import Loading from "../components/Loading";
+import { ApiEndpointsEnum } from "../enums/ApiEndpointsEnum";
+import { QueryKeyEnum } from "../enums/QueryKeyEnum";
+import { useApiService } from "../services/ApiService";
 
-const text = `هذا النص هو مثال لنص يمكن أن يستبدل في نفس المساحة، لقد تم توليد هذا النص من مولد النص العربى.... هذا النص هو مثال لنص يمكن أن يستبدل في نفس المساحة، لقد تم توليد هذا النص من مولد النص العربى.... `;
 export default function Testimonials() {
-  //   const newsService = useNewsService();
-  const fakeImage = "https://www.youtube.com/embed/PlKeif7wAzY";
+  const apiService = useApiService<SayerType>({
+    endpoint: ApiEndpointsEnum.SayersTestimonies,
+    queryKey: [QueryKeyEnum.sayersTestimonies],
+  });
+
+  const [opened, { open, close }] = useDisclosure(false);
   //   if (newsService.isLoading) return <p>loading...</p>;
   const filterOne = <FilterComponent label="عـام" data={["2023", "2024"]} />;
 
-  const [opened, { open, close }] = useDisclosure(false);
+  const { typedData, isLoading } = apiService.Get();
+
+  console.log(typedData);
+
+  const [selectedItem, setSelectedItem] = useState<SayerType | null>();
+  const [viewOnly, setViewOnly] = useState(false);
+
+  const handleEdit = (item: SayerType, viewOnly: boolean) => {
+    setViewOnly(viewOnly);
+    setSelectedItem(item);
+    open();
+  };
+  //   const newsService = useNewsService();
+  const fakeImage = "https://www.youtube.com/embed/PlKeif7wAzY";
+
+  if (isLoading) {
+    return <Loading />;
+  }
+
   return (
     <div className="p-5">
       <AddSayModal
         modal={{
           opened: opened,
           onOpen: open,
-          onClose: close,
+          onClose: () => {
+            setSelectedItem(null); // Reset the selected item when the modal is closed
+            close();
+          },
         }}
+        selectedItem={selectedItem}
+        viewOnly={viewOnly}
       />
 
       {/* Control Elements  */}
@@ -36,13 +68,14 @@ export default function Testimonials() {
       />
       {/* page content  */}
       <section className="bg-white rounded my-2 px-2 pt-8 flex flex-col gap-y-2">
-        {[1, 2, 3, 4, 5].map(() => (
+        {typedData?.map((item: SayerType) => (
           <div className="odd:bg-[#f8f9fa] even:bg-white  p-3">
             <TestimonialItem
-              link={fakeImage}
-              title="احمد السيد"
-              text={text}
-              id="1"
+              data={item}
+              key={item.sayerId}
+              showItem={(data) => handleEdit(data, true)}
+              editItem={(data) => handleEdit(data, false)}
+              deleteItem={() => apiService.delete(item.sayerId)}
             />
           </div>
         ))}
@@ -50,3 +83,8 @@ export default function Testimonials() {
     </div>
   );
 }
+
+// sayerImageLink={fakeImage}
+// sayerName={item.sayerName}
+// sayingText={item.sayingText}
+// sayerId={item.sayerId}
