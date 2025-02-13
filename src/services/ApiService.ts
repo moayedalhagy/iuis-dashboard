@@ -19,9 +19,6 @@ type Params<T> = {
 };
 
 export function useApiService<T>({ endpoint, queryKey }: Params<T>) {
-  const config = {
-    contentType: "json",
-  };
   const queryClient = useQueryClient();
 
   const invalidateQueries = () => {
@@ -66,16 +63,33 @@ export function useApiService<T>({ endpoint, queryKey }: Params<T>) {
 
     onError: ErrorHandler,
   });
+  const createForm = useMutation({
+    mutationKey: queryKey,
+    mutationFn: (data: any) => apiHandler.postForm(`${endpoint}`, data), // دالة الإنشاء في API
+    onSuccess: () => {
+      invalidateQueries();
+      notify("رسالة نجاح", `تم اضافة البيانات بنجاح`);
+    },
+
+    onError: ErrorHandler,
+  });
 
   // استعلام التحديث (update)
   // apiUpdate
   const update = useMutation({
     mutationKey: queryKey,
-    mutationFn: ({ id, data }: any) => {
-      return config.contentType == "form"
-        ? apiHandler.putForm(`${endpoint}/${id}`, data)
-        : apiHandler.put(`${endpoint}/${id}`, data);
+    mutationFn: ({ id, data }: any) =>
+      apiHandler.put(`${endpoint}/${id}`, data),
+    onSuccess: () => {
+      invalidateQueries();
+      notify("رسالة نجاح", `تم تحديث البيانات بنجاح`);
     },
+    onError: ErrorHandler,
+  });
+  const updateForm = useMutation({
+    mutationKey: queryKey,
+    mutationFn: ({ id, data }: any) =>
+      apiHandler.putForm(`${endpoint}/${id}`, data),
     onSuccess: () => {
       invalidateQueries();
       notify("رسالة نجاح", `تم تحديث البيانات بنجاح`);
@@ -97,8 +111,9 @@ export function useApiService<T>({ endpoint, queryKey }: Params<T>) {
   return {
     Get, // استخدام البيانات (قراءة)
     create: (data: T) => create.mutate(data), // إنشاء خبر جديد
+    createForm: (data: T) => createForm.mutate(data), // إنشاء خبر جديد
     update,
+    updateForm,
     delete: (id: number | string) => remove.mutate(id), // حذف خبر
-    config,
   };
 }

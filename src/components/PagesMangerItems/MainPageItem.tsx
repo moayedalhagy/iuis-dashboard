@@ -53,9 +53,7 @@ export default function MainPageItem({ data }: { data: any }) {
 
   const onSubmit: SubmitHandler<PageItemType> = (data: PageItemType) => {
     if (item) {
-      apiService.config.contentType = "form";
-
-      apiService.update.mutate({
+      apiService.updateForm.mutate({
         id: item.pageId,
         data,
       });

@@ -93,9 +93,9 @@ export default function AddNewsModal({
 
   const onSubmit: SubmitHandler<NewsCardApiType> = (data: NewsCardApiType) => {
     if (selectedItem) {
-      apiService.update.mutate({ id: selectedItem.newsId, data });
+      apiService.updateForm.mutate({ id: selectedItem.newsId, data });
     } else {
-      apiService.create(data);
+      apiService.createForm(data);
       return;
     }
     reset();
