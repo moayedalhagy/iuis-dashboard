@@ -18,3 +18,12 @@ export function isValidUrl(url: string) {
 export function removeHtmlTags(input: string) {
   return input.replace(/<\/?[^>]+(>|$)/g, "");
 }
+
+// Files\\PagesImage\\2025_02_12_141912_obj.png --> Files/PagesImage/2025_02_12_141912_obj.png.
+export const convertBackslashesToSlashes = (path: string) => {
+  return path.replace(/\\/g, "/");
+};
+
+export const asset = (path: string) => {
+  return `https://api.iuis.university/${convertBackslashesToSlashes(path)}`;
+};

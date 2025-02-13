@@ -1,66 +1,128 @@
-import { RiEdit2Line, RiGalleryLine } from "@remixicon/react";
+import { RiDeleteBinFill, RiGalleryLine, RiSave2Line } from "@remixicon/react";
 import AccordionItem from "../AccordionItem";
-import ButtonIcon from "../ButtonIcon";
-import { Button, Image, TextInput } from "@mantine/core";
-import VideoInput from "../VideoInput";
 
-export default function MainPageItem() {
+import { Button, FileInput, Image, Loader } from "@mantine/core";
+import { useEffect, useRef, useState } from "react";
+import { SubmitHandler, useForm } from "react-hook-form";
+import { PageItemType } from "../../types/PageItemType";
+import { asset } from "../../services/Helper";
+
+import { useIsMutating } from "@tanstack/react-query";
+import { useApiService } from "../../services/ApiService";
+import { ApiEndpointsEnum } from "../../enums/ApiEndpointsEnum";
+import { QueryKeyEnum } from "../../enums/QueryKeyEnum";
+import ButtonIconTip from "../ButtonIconTip";
+
+export default function MainPageItem({ data }: { data: any }) {
+  const [mainImage, setMainImage] = useState<File | null>(null);
+  const [mainImagePreview, setMainImagePreview] = useState<string | null>(null);
+  const fileInput = useRef<any>(null);
+  const apiService = useApiService<any>({
+    endpoint: ApiEndpointsEnum.PagesImagesLinks,
+    queryKey: [QueryKeyEnum.pagesImagesLinks],
+  });
+
   const itemTitle = "الصفحة الرئيسية";
+  const item: PageItemType = data.filter(
+    (item: any) => item.pageName == "Main"
+  )[0];
+
+  if (!item) {
+    return <p>no item exists</p>;
+  }
+
+  useEffect(() => {
+    setMainImagePreview(asset(typeof item.link === "string" ? item.link : ""));
+  }, []);
+
+  const pendingRequest = useIsMutating();
+
+  const { handleSubmit, setValue } = useForm<PageItemType>({
+    defaultValues: {
+      pageId: item.pageId,
+      pageName: item.pageName,
+      link: item.link,
+    },
+  });
+
+  const handleMainImage = (e: any) => {
+    setMainImage(e);
+    setValue("link", e);
+    setMainImagePreview(e ? URL.createObjectURL(e) : "");
+  };
+
+  const onSubmit: SubmitHandler<PageItemType> = (data: PageItemType) => {
+    if (item) {
+      apiService.config.contentType = "form";
+
+      apiService.update.mutate({
+        id: item.pageId,
+        data,
+      });
+    }
+  };
+
   return (
     <AccordionItem title={itemTitle}>
-      {/* Button  */}
-      <ButtonIcon
-        label="إضافة صورة رئيسية"
-        icon={<RiGalleryLine />}
-        clickHandler={() => alert(2)}
-      />
-      {/* Image  */}
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <div>
+          {mainImage == null && (
+            <ButtonIconTip
+              tip="نقر مزدوج"
+              label="إضافة صورة"
+              icon={<RiGalleryLine />}
+              classNames={{
+                root: "bg-info ",
+              }}
+              props={{}}
+              doubleClickHandler={() => fileInput.current?.click()}
+            />
+          )}
+          {mainImage != null && (
+            <ButtonIconTip
+              tip="نقر مزدوج"
+              label="حذف الصورة"
+              icon={<RiDeleteBinFill />}
+              classNames={{
+                root: "bg-red-600",
+              }}
+              props={{}}
+              doubleClickHandler={() => handleMainImage(null)}
+            />
+          )}
+          <FileInput
+            ref={fileInput}
+            id="fileInput"
+            style={{ display: "none" }}
+            clearable
+            label="إضافة صورة "
+            placeholder="Upload files"
+            value={mainImage}
+            onChange={handleMainImage}
+          />
+          <div className="my-3 max-w-[250px] max-h-[250px] bg-red-300 overflow-hidden rounded-md">
+            <Image
+              src={mainImagePreview ? mainImagePreview : ""}
+              height={160}
+              alt="Norway"
+              fit="contain"
+              fallbackSrc="https://placehold.co/600x400?text=no image"
+            />
+          </div>
 
-      <div className="my-3 max-w-[250px] max-h-[250px]   overflow-hidden rounded-md">
-        <Image
-          src={"https://picsum.photos/300/300"}
-          height={160}
-          alt="Norway"
-          fit="contain"
-          fallbackSrc="https://placehold.co/600x400?text=Placeholder"
-        />
-      </div>
-
-      <div className="flex gap-x-2">
-        <TextInput
-          withAsterisk
-          label="عنوان الخبر"
-          description=" "
-          error=""
-          className="flex-1"
-        />
-        <Button
-          variant="outline"
-          mt="md"
-          radius="md"
-          color="green"
-          size="xs"
-          className="self-end"
-        >
-          <RiEdit2Line />
-        </Button>
-      </div>
-
-      <div className="mt-3 flex gap-x-2">
-        <div className="flex-1">
-          <VideoInput required onChange={() => null} />
+          <Button
+            classNames={{
+              root: "bg-info w-32",
+            }}
+            size="sm"
+            type="submit"
+            disabled={pendingRequest > 0}
+            leftSection={<RiSave2Line />}
+          >
+            {pendingRequest > 0 ? <Loader type="dots" color="white" /> : "حفظ"}
+          </Button>
         </div>
-        <Button
-          variant="outline"
-          mt="md"
-          radius="md"
-          color="green"
-          size="xs"
-          className="self-end"
-        >
-          <RiEdit2Line />
-        </Button>
-      </div>
+      </form>
     </AccordionItem>
   );
 }
